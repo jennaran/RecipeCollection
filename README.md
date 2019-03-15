@@ -4,7 +4,7 @@ tekstiä
 
 - lista1
 - lista2
-  -sisennys
+  - sisennys
     1. sisennyksen sisennys
 
 sana sana `hieno sana` sana
@@ -16,7 +16,7 @@ sana sana `hieno sana` sana
 | 1 | 2 | 3 |
 
 
-sana * vino * sanana ** tumma **
+sana * vino * sanana ** tumma **.
 
 ~~yliviivaus~~
 
