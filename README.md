@@ -16,6 +16,7 @@ sana sana `hieno sana` sana
 | 1 | 2 | 3 |
 | ykkönen | kakkonen | kolmonen |
 
+moi
 
 sana *vino* sanana **tumma**.
 
