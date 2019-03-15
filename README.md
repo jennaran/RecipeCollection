@@ -16,7 +16,7 @@ sana sana `hieno sana` sana
 | 1 | 2 | 3 |
 
 
-sana * vino * sanana ** tumma **.
+sana *vino* sanana **tumma**.
 
 ~~yliviivaus~~
 
