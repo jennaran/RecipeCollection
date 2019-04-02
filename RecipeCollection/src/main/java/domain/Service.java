@@ -1,14 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package domain;
 
-/**
- *
- * @author Jenna
- */
 public class Service {
+    //tarvitaanko @Autowired DerbyRecipeDAO;...;
+    //voiko DB browsetilla tehdä tietokannan
+    //kutsutaanko   Connection connection = DriverManager.getConnection("jdbc:sqlite:testi.db");   täällä vai ui:ssa?
+    /*Kun NetBeans-projektista valitsee oikealla hiirennapilla 
+    Dependencies ja klikkaa Download Declared Dependencies, 
+    latautuu JDBC-ajuri projektin käyttöön. ????*/
     
+    
+
 }

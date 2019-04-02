@@ -1,14 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
-/**
- *
- * @author Jenna
- */
+import domain.User;
+import java.sql.SQLException;
+import java.util.List;
+
 public interface UserDAO {
-    
+    void create(User object) throws SQLException;
+    User searchByKey(Integer key) throws SQLException;
+    boolean update(User object) throws SQLException;
+    void delete(Integer key) throws SQLException;
+    List<User> listAll() throws SQLException;
 }
