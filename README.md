@@ -7,5 +7,6 @@ Sovellusta voi käyttää usea käyttäjä, mutta sisältö on kaikille henkilö
 ## Dokumentaatio
 
 [Vaatimusmäärittely](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/alustava_maarittelydokumentti.md)
+
 [Tuntikirjanpito](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
