@@ -1,24 +1,11 @@
-# ISO
-## ei niin iso
-tekstiä
+# RecipeCollection
 
-- lista1
-- lista2
-  - sisennys
-    1. sisennyksen sisennys
+Sovelluksen avulla käyttäjä voi pitää kirjaa pitäneistään resepteistä. 
+Sovellusta voi käyttää usea käyttäjä, mutta sisältö on kaikille henkilökohtainen.
 
-sana sana `hieno sana` sana
 
-> saadaan viiva ja harmaata tekstiä
+## Dokumentaatio
 
-| eka | toka | kolmas |
-| --- | --- | --- |
-| 1 | 2 | 3 |
-| ykkönen | kakkonen | kolmonen |
-
-moi
-
-sana *vino* sanana **tumma**.
-
-~~yliviivaus~~
+[Vaatimusmäärittely](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/alustava_maarittelydokumentti.md)
+[Tuntikirjanpito](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
