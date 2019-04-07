@@ -1,8 +1,13 @@
 
 package ui;
 
+import dao.DerbyRecipeDAO;
+import dao.DerbyUserDAO;
+import domain.Service;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -38,11 +43,26 @@ public class RecipeCollectionUi extends Application {
     private final int sceneH = 390;
     private final int sceneW = 720;
     private Stage stage;
+    
+    private Service service;
         
+     @Override
+    public void init() throws Exception {
+        Properties prop = new Properties();
+        prop.load(new FileInputStream("config.properties"));
+
+        String userFile = prop.getProperty("user");
+        String recipeFile = prop.getProperty("recipe");
+        
+        DerbyUserDAO userDao = new DerbyUserDAO(userFile);
+        DerbyRecipeDAO recipeFile = new DerbyRecipeDAO(userDao, recipeFile);
+        Service = new Service(recipeFile, userDao);
+    }
+    
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
         this.stage = primaryStage;
-       Scene scene = buildBeginningScene();
+        Scene scene = buildBeginningScene();
         
         stage.setTitle("RecipeCollection");
         stage.setScene(scene);
@@ -86,13 +106,14 @@ public class RecipeCollectionUi extends Application {
         border.setRight(addInstructions());
         border.setLeft(addIngedients());
         
-        this.newUserScene = new Scene(border, sceneW, sceneH);
-        return newUserScene;
+        this.newRecipeScene = new Scene(border, sceneW, sceneH);
+        return newRecipeScene;
     }
     
     public BorderPane middleButton(String text, int nro) {
         //used in login page as "Create an Account" and logged in page as "make a new Recipe"
         //nro 1 stands for create account and 2 for new recipe
+        //done
         BorderPane border = new BorderPane();
         Button button = new Button(text);
         button.setMinHeight(60);
@@ -142,9 +163,11 @@ public class RecipeCollectionUi extends Application {
         grid.add(hbBtn, 1, 4+1);
         //sign in action
         downButton.setOnMouseClicked(e -> {
-            //get texts and make sure they can be found from the database
-            //if not -> put up a text "Incorrect username or password"
             if (i == 0) {
+                //kirjaudu sisään
+                //get texts and make sure they can be found from the database
+                //if not -> put up a text "Incorrect username or password"
+                
                 stage.setScene(loggedInScene());
             } else {
                 
@@ -288,13 +311,12 @@ public class RecipeCollectionUi extends Application {
     
     public StackPane list(List<String> all) {
         //ei laita arvoja...
-        ObservableList<String> data = FXCollections.observableArrayList();
+        ObservableList<String> data = FXCollections.observableArrayList(all);
 
         ListView<String> listView = new ListView<String>(data);
         listView.setPrefSize(200, 250);
         
         all.stream().forEach(i -> data.add(i));
-        data.add("hei");
 
         listView.setItems(data);
         listView.getSelectionModel().selectedItemProperty().addListener(
