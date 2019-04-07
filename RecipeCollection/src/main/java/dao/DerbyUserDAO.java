@@ -10,17 +10,17 @@ import java.util.Scanner;
 
 public class DerbyUserDAO implements UserDAO{
     private List<User> users;
-    private String file;
+    private String userFile;
     
     public DerbyUserDAO(String file) throws Exception{
         users = new ArrayList<>();
-        this.file = file;
+        this.userFile = file;
         try {
             Scanner reader = new Scanner(new File(file));
             while (reader.hasNextLine()) {
                 String[] parts = reader.nextLine().split(";");
                 //name, username, password
-                User user = new User(parts[0], parts[1], parts[2]);
+                User user = new User(parts[0], parts[1]);
                 users.add(user);
             }
         } catch (Exception e) {
@@ -31,12 +31,10 @@ public class DerbyUserDAO implements UserDAO{
     
 
     @Override
-    public void create(User object) throws Exception {
-        try (FileWriter fw = new FileWriter(new File(this.file))) {
-            for (User user : users) {
-                fw.write(user.getName() + ";" + user.getUsername() + ";" + user.getPassword() + "\n");
-            }
-        }
+    public void create(User newUser) throws Exception {
+            users.add(newUser);
+            saveToFile();
+           
     }
 
     @Override
@@ -51,13 +49,25 @@ public class DerbyUserDAO implements UserDAO{
     }
 
     @Override
-    public void delete(Integer key) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(User user) throws Exception {
+        this.users.remove(user);
+        saveToFile();
     }
 
     @Override
     public List<User> listAll() throws Exception {
         return this.users;
+    }
+    
+     @Override
+    public void saveToFile() throws Exception {
+        try (FileWriter writer = new FileWriter(new File(userFile))){
+            for (User u : users) {
+                writer.write(u.getUsername() + ";" + u.getPassword() + "\n");
+            }
+        } catch (Exception e) {
+            
+        }
     }
     
 }

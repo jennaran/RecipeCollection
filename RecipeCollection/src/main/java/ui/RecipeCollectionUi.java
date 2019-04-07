@@ -39,7 +39,7 @@ import javafx.stage.Stage;
 
 
 public class RecipeCollectionUi extends Application {
-    private Scene beginningScene, newUserScene, loggedInScene, newRecipeScene;
+    private Scene beginningScene, newUserScene, loggedInScene, newRecipeScene, recipeScene;
     private final int sceneH = 390;
     private final int sceneW = 720;
     private Stage stage;
@@ -55,8 +55,8 @@ public class RecipeCollectionUi extends Application {
         String recipeFile = prop.getProperty("recipe");
         
         DerbyUserDAO userDao = new DerbyUserDAO(userFile);
-        DerbyRecipeDAO recipeFile = new DerbyRecipeDAO(userDao, recipeFile);
-        Service = new Service(recipeFile, userDao);
+        DerbyRecipeDAO recipeDao = new DerbyRecipeDAO(userDao, recipeFile);
+        this.service = new Service(userDao, recipeDao);
     }
     
     @Override
@@ -83,11 +83,27 @@ public class RecipeCollectionUi extends Application {
         return beginningScene;
     }
     
-    public Scene loggedInScene() {
+    public Scene loggedInScene() throws Exception {
         BorderPane border = new BorderPane();
         border.setRight(middleButton("Add A New Recipe", 2));
-        border.setLeft(list());
+        BorderPane borderIngredients = new BorderPane();
+        borderIngredients.setPrefWidth(sceneW / 2);
         
+        HBox searching = new HBox();
+        searching.setPrefWidth(sceneW / 2);
+        Button search = new Button("Search");
+        TextField searchBy = new TextField();
+        searchBy.setPrefWidth(300);
+        searching.getChildren().add(searchBy);
+        searching.getChildren().add(search);
+        borderIngredients.setTop(searching);
+        borderIngredients.setCenter(list());
+        
+        search.setOnAction(a -> {
+            String name = searchBy.getText();
+        });
+        
+        border.setLeft(borderIngredients);
         border.setTop(userMenu());
         this.loggedInScene = new Scene(border, sceneW, sceneH);
         return loggedInScene;
@@ -110,10 +126,17 @@ public class RecipeCollectionUi extends Application {
         return newRecipeScene;
     }
     
+    public Scene recipeScene() {
+        BorderPane border = new BorderPane();
+        border.setRight(Instructions());
+        //border.setLeft(ingedients());
+        
+        this.newRecipeScene = new Scene(border, sceneW, sceneH);
+        return newRecipeScene;
+    }
+    
     public BorderPane middleButton(String text, int nro) {
-        //used in login page as "Create an Account" and logged in page as "make a new Recipe"
         //nro 1 stands for create account and 2 for new recipe
-        //done
         BorderPane border = new BorderPane();
         Button button = new Button(text);
         button.setMinHeight(60);
@@ -132,51 +155,71 @@ public class RecipeCollectionUi extends Application {
         return border;
     }
     
+    public GridPane Instructions() {
+        Text text = new Text("Instructions");
+        text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        Text instructions = new Text();
+        
+        String instructionText = "";
+        GridPane grid = gridPane();
+        grid.add(grid, sceneH, sceneH);
+        return grid;
+    }
+    
     public GridPane loginSigninBox(String text, String button, int i) {
         //0 for signing in and 1 for signing up
         GridPane grid = gridPane();
-        
+        //maybe set prefsize to textFields????????????
         Text upText = new Text(text);
         upText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(upText, 0, 1);
         
-        if (i == 1) {
-            Label name = new Label("Name:");
-            grid.add(name, 0, 2);
-            TextField nameTextField = new TextField();
-            grid.add(nameTextField, 1, 2);
-        }
-        
         Label userName = new Label("User Name:");
-        grid.add(userName, 0, 2+i);
+        grid.add(userName, 0, 2);
         TextField userTextField = new TextField();
-        grid.add(userTextField, 1, 2+i);
+        grid.add(userTextField, 1, 2);
         Label password = new Label("Password:");
-        grid.add(password, 0, 3+i);
+        grid.add(password, 0, 3);
         PasswordField pwField = new PasswordField();
-        grid.add(pwField, 1, 3+i);
+        grid.add(pwField, 1, 3);
         
         Button downButton = new Button(button);
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(downButton);
-        grid.add(hbBtn, 1, 4+1);
-        //sign in action
+        grid.add(hbBtn, 1, 4);
+
         downButton.setOnMouseClicked(e -> {
             if (i == 0) {
-                //kirjaudu sisään
-                //get texts and make sure they can be found from the database
-                //if not -> put up a text "Incorrect username or password"
+                String un = userTextField.getText();
+                String pw = pwField.getText();
+                try {
+                    if (service.logIn(un, pw)) {
+                        stage.setScene(loggedInScene());
+                        userTextField.clear();
+                        pwField.clear();
+                    } else {
+                        Text failedLogin = new Text("Incorrect username or password");
+                        grid.add(failedLogin, 1, 5);
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+            } else if (i == 1){
+                String un = userTextField.getText();
+                String pw = pwField.getText(); 
                 
-                stage.setScene(loggedInScene());
-            } else {
-                
-        //Check that the user doesn't match with any of the existing users (from our list of users <User>)
-        //If exists -> put up a text "You already have an account"
-        //If doesn't -> go to the loggingScene
-                stage.setScene(this.beginningScene);
+                try {
+                    if (service.createNewUser(un, pw)) {
+                        stage.setScene(this.beginningScene);
+                    } else {
+                        Text failedLogin = new Text("This username is already in use");
+                        grid.add(failedLogin, 1, 5);
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex);;
+                }
             }
-            
         });
         
         return grid;
@@ -194,46 +237,54 @@ public class RecipeCollectionUi extends Application {
     }
     
     public MenuBar userMenu() {
-        //gotta add user's name 
-        //userMenu(String name)
-        //https://o7planning.org/en/11115/javafx-contextmenu-tutorial // maybe?
-        Menu userMenu = new Menu("User name");
+        String username = service.getLoggenInUser().getUsername();
+        Menu userMenu = new Menu(username);
         MenuItem sighOut = new MenuItem("Sign out");
+        MenuItem delete = new MenuItem("Delete account");
 
         userMenu.getItems().add(sighOut);
+        userMenu.getItems().add(delete);
 
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().add(userMenu);
         
-        //change the action!
         sighOut.setOnAction(e -> {
-            System.out.println("Out");
+            service.logOut();
+            stage.setScene(this.beginningScene);
+        });
+        
+        delete.setOnAction(e -> {
+            try {
+                service.deleteAccount();
+                stage.setScene(this.beginningScene);
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
         });
         
         return menuBar;
     }
+    
     public BorderPane addInstructions() {
         Text text = new Text("Instructions");
         text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-       
-
+        
         TextArea addInstructions = new TextArea();
         
         Button backButton = new Button("Back");
         Button saveButton = new Button("Save");
         
-        HBox buttons = new HBox();
-        buttons.getChildren().addAll(backButton, saveButton);
-        buttons.setMinWidth(30);
-        buttons.setAlignment(Pos.BOTTOM_RIGHT);
-        buttons.setSpacing(10);
-        buttons.setPadding(new Insets(10, 0, 0, 0));
         
+        GridPane grid = new GridPane();
+        grid.add(text, 0, 0);
+        grid.add(backButton, 2, 0);
+        grid.add(saveButton, 3, 0);
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setHgap(10);
         BorderPane border = new BorderPane();
         
-        border.setTop(text);
+        border.setTop(grid);
         border.setCenter(addInstructions);
-        border.setBottom(buttons);
         border.setPrefWidth(sceneW / 2);
         border.setPadding(new Insets(10, 10, 10, 10));
         
@@ -248,7 +299,7 @@ public class RecipeCollectionUi extends Application {
         return border;
     }
     
-    public BorderPane addIngedients() {
+    public GridPane addIngedients() {
         List<String> ingredients = new ArrayList();
         
         Text text = new Text("Ingedients");
@@ -257,11 +308,12 @@ public class RecipeCollectionUi extends Application {
         TextField addField = new TextField();
         Button add = new Button("Add");
         
+        
         HBox addingStuff = new HBox();
         addingStuff.getChildren().addAll(addField, add);
         addingStuff.setPadding(new Insets(10, 10, 10, 10));
         addingStuff.setSpacing(10);
-        
+             
         add.setOnMouseClicked(e -> {
             String newIngredient = addField.getText();
             addField.clear();
@@ -273,25 +325,25 @@ public class RecipeCollectionUi extends Application {
         //hmmm propably gotta add list(1) etc.
         StackPane list = list(ingredients);
         
-        BorderPane border = new BorderPane();
-        border.setPrefWidth(sceneW / 2);
-        border.setPadding(new Insets(10, 10, 10, 10));
+        GridPane grid = new GridPane();
+        grid.setPrefWidth(sceneW / 2);
+        grid.setPadding(new Insets(10, 10, 10, 10));
         
-        border.setTop(text);
-        border.setTop(addingStuff);
-        border.setCenter(list);
+        grid.add(text, 0, 0);
+        grid.add(addingStuff, 0, 1);
+        grid.add(list, 0, 2);
         
-        return border;
+        return grid;
     }
     
-    public StackPane list() {
+    public StackPane list() throws Exception {
         //List is gonna be filled with user's recipe names
         ObservableList<String> data = FXCollections.observableArrayList();
 
-        ListView<String> listView = new ListView<String>(data);
+        ListView<String> listView = new ListView<String>();
         listView.setPrefSize(200, 250);
-        //Stream here, data.add
-        data.addAll("Recipe A", "Recipe B", "Recipe C", "Recipe D", "Recipe E");
+        List<String> recipeNames = service.userRecipeNames();
+        data.addAll(recipeNames);
 
         listView.setItems(data);
         listView.getSelectionModel().selectedItemProperty().addListener(
@@ -305,7 +357,6 @@ public class RecipeCollectionUi extends Application {
         root.getChildren().add(listView);
         root.setPrefWidth(sceneW / 2);
 
-
         return root;
     }
     
@@ -314,7 +365,7 @@ public class RecipeCollectionUi extends Application {
         ObservableList<String> data = FXCollections.observableArrayList(all);
 
         ListView<String> listView = new ListView<String>(data);
-        listView.setPrefSize(200, 250);
+        listView.setPrefSize(300, 310);
         
         all.stream().forEach(i -> data.add(i));
 

@@ -9,6 +9,8 @@ public interface UserDAO {
     void create(User object) throws Exception;
     User searchByUsername(String username) throws Exception;
     boolean update(User object) throws Exception;
-    void delete(Integer key) throws Exception;
+    void delete(User user) throws Exception;
     List<User> listAll() throws Exception;
+    public void saveToFile() throws Exception;
+
 }
