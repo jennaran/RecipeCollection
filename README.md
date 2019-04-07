@@ -10,3 +10,4 @@ Sovellusta voi käyttää usea käyttäjä, mutta sisältö on kaikille henkilö
 
 [Tuntikirjanpito](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
+[Arkkitehtuuri]()
