@@ -6,3 +6,6 @@
 | 31.3. | 3 | Perehdyin sovelluksen rakenteeseen lisää ja hahmottelin alustavaa sovellusta |
 | 1.4. | 2 | Perehdyin DAO rajapintaan ja loin sovellukseen tarvittavat luokat |
 | 2.4. | 8 | Graaffisenkäyttöliittymän luonti. Lisätään myöhemmin muihin luokkiin liittyvät metodit |
+| 3.4. | 1 | Tallennusmuotoon perehtyminen |
+| 4.4. | 2 | Tallennusmuodon testaaminen toisessa projektissa ja sen lisääminen tähän projektiin |
+| 7.4. | 8 | Lisäsin sovellukseen toiminnallisuuksia |
