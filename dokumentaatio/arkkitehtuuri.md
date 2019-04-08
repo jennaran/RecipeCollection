@@ -30,7 +30,7 @@ ulkoistettu. Konstruktori luodaan käyttöliittymän alussa init() -metodissa.
 Sovelluksen loogisen datamallin muodostaa User -luokka, joka kuvaa käyttäjää ja 
 Recipe-luokka, joka kuvaa reseptejä. Käyttäjä voi omistaa monta yksityistä reseptiä.
 
-KUVA
+<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/taulujen_yhteydet.png">
 
 Ohjelman toiminnallisuuksista vastaa Service olio, jolla on metodit kaikille 
 sovelluksen toiminnallisuuksille, kuten uuden käyttäjän luomiselle, 
@@ -40,12 +40,11 @@ ohjelman toiminnallisuuksia.
 
 TodoServicen ja ohjelman muiden osien suhdetta kuvaava luokka- ja pakkauskaavio:
 
-KUVA
+<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/pakkauskaavio.png">
 
 ## Tietojen pysyväistallennus
 
 Pakkauksen dao luokat DerbyRecipeDao ja DerbyUserDao huolehtivat tietojen tallettamisesta tiedostoihin.
-
 
 
 
