@@ -279,7 +279,7 @@ public class RecipeCollectionUi extends Application {
         grid.add(text, 0, 0);
         grid.add(backButton, 2, 0);
         grid.add(saveButton, 3, 0);
-        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setPadding(new Insets(0, 0, 40, 0));
         grid.setHgap(10);
         BorderPane border = new BorderPane();
         
@@ -287,6 +287,8 @@ public class RecipeCollectionUi extends Application {
         border.setCenter(addInstructions);
         border.setPrefWidth(sceneW / 2);
         border.setPadding(new Insets(10, 10, 10, 10));
+        border.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+
         
         backButton.setOnMouseClicked(e -> {
             stage.setScene(this.loggedInScene);
@@ -311,7 +313,7 @@ public class RecipeCollectionUi extends Application {
         
         HBox addingStuff = new HBox();
         addingStuff.getChildren().addAll(addField, add);
-        addingStuff.setPadding(new Insets(10, 10, 10, 10));
+        addingStuff.setPadding(new Insets(10, 0, 5, 0));
         addingStuff.setSpacing(10);
              
         add.setOnMouseClicked(e -> {

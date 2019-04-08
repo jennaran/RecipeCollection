@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class DerbyUserDAO implements UserDAO{
+public class DerbyUserDAO implements UserDAO {
     private List<User> users;
     private String userFile;
     
-    public DerbyUserDAO(String file) throws Exception{
+    public DerbyUserDAO(String file) throws Exception {
         users = new ArrayList<>();
         this.userFile = file;
         try {
@@ -34,7 +34,6 @@ public class DerbyUserDAO implements UserDAO{
     public void create(User newUser) throws Exception {
             users.add(newUser);
             saveToFile();
-           
     }
 
     @Override
@@ -61,7 +60,7 @@ public class DerbyUserDAO implements UserDAO{
     
      @Override
     public void saveToFile() throws Exception {
-        try (FileWriter writer = new FileWriter(new File(userFile))){
+        try (FileWriter writer = new FileWriter(new File(userFile))) {
             for (User u : users) {
                 writer.write(u.getUsername() + ";" + u.getPassword() + "\n");
             }

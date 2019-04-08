@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class DerbyRecipeDAO implements RecipeDAO{
+public class DerbyRecipeDAO implements RecipeDAO {
     private List<Recipe> recipes;
     private final String recipeFile;
     
-    public DerbyRecipeDAO(UserDAO users, String recipeFile) throws Exception{
-        this.recipeFile=recipeFile;
+    public DerbyRecipeDAO(UserDAO users, String recipeFile) throws Exception {
+        this.recipeFile = recipeFile;
         this.recipes = new ArrayList();
         
         try {
@@ -85,7 +85,7 @@ public class DerbyRecipeDAO implements RecipeDAO{
 
     @Override
     public void saveToFile() throws Exception {
-        try (FileWriter writer = new FileWriter(new File(recipeFile))){
+        try (FileWriter writer = new FileWriter(new File(recipeFile))) {
             for (Recipe r : recipes) {
                 writer.write(r.getUniqueID() + ";" + r.getName() + ";" + r.getIngredients() + ";" + r.getInstruction() + ";" + r.getUser().getUsername() + "\n");
             }

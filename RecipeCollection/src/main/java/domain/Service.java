@@ -55,9 +55,7 @@ public class Service {
         if (userDao.searchByUsername(username) != null) {
             return false;
         }
-        
         User user = new User(username, password);
-        
         try {
             userDao.create(user);
         } catch (Exception e) {
@@ -82,7 +80,7 @@ public class Service {
     }
      
     public void logOut() {
-        this.loggenInUser=null;
+        this.loggenInUser = null;
     }
     
     public void deleteAccount() throws Exception {
