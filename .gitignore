@@ -12,11 +12,11 @@
 
 /RecipeCollection/target/
 /laskarit/viikko2/tiedostonlukemistesti/target/
-/RecipeCollection/nbproject/
-/RecipeCollection/checkstyle.xml/
-/RecipeCollection/config.properties/
-/RecipeCollection/nbactions.xml/
-/RecipeCollection/pom.xml/
-/RecipeCollection/recipe.txt/
-/RecipeCollection/skipped_files.xml/
-/RecipeCollection/user.txt/
+/RecipeCollection/nbproject
+/RecipeCollection/checkstyle.xml
+/RecipeCollection/config.properties
+/RecipeCollection/nbactions.xml
+/RecipeCollection/pom.xml
+/RecipeCollection/recipe.txt
+/RecipeCollection/skipped_files.xml
+/RecipeCollection/user.txt
