@@ -83,6 +83,6 @@ Uudenkäyttäjän luomisnäkymän Sign up -nappi laittaa liikkeelle seuraavan ke
 
 <img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/newUser.png">
 
-#Ohjelman rakenteeseen jääneet heikkoudet
+# Ohjelman rakenteeseen jääneet heikkoudet
 
 
