@@ -45,6 +45,41 @@ TodoServicen ja ohjelman muiden osien suhdetta kuvaava luokka- ja pakkauskaavio:
 ## Tietojen pysyväistallennus
 
 Pakkauksen dao luokat DerbyRecipeDao ja DerbyUserDao huolehtivat tietojen tallettamisesta tiedostoihin.
+Sovelluksessa niitä käytetään niiden rajapintojen kautta.
 
+### Tiedostot
+
+Käyttäjien ja reseptien tiedot tallennetaan erillisiin tiedostoihin. 
+Ohjelman juuresta löytyy config.properties tiedosto, josta tiedostojen nimet löytyvät. 
+Käyttäjät tallennetaan tiedostoon nimeltä user.txt ja reseptit tiedostoon recipe.txt.
+
+#### Käyttäjien tallennusmuoto
+
+username;password
+
+Käyttäjänimi ja salasana on erotettu puolipisteellä. Jokainen käyttäjä tallennetaan eri riveille.
+
+### Reseptien tallennusmuoto
+
+id;name;ingredient1_ingredient2;instruction1_instruction2;user's name
+
+Reseptit tallennetaan eri riveille. Ensin tallennetaan automaattisesti luotu integer id, 
+sitten reseptin nimi, siihen tarvittavat raaka-aineet, ohjeet ja reseptin omistajan
+ käyttäjänimi. Kaikki erotetaan toisistaan puolipisteillä. 
+Raaka-aineiden ja ohjeiden väliset alaviivat mahdollistavat niiden selkeämmän listauksen
+ reseptintarkastelunäkymässä.
+
+## Päätoiminnallisuudet
+
+### Käyttäjän kirjautuminen sekvenssikaaviona
+
+Kirjautumis näkymän Sign In -nappi laittaa liikkeelle seuraavan ketjun:
+
+### Uuden käyttäjän luominen sekvenssikaaviona
+
+Uudenkäyttäjän luomisnäkymän Sign up -nappi laittaa liikkeelle seuraavan ketjun:
+
+
+#Ohjelman rakenteeseen jääneet heikkoudet
 
 
