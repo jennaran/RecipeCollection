@@ -73,12 +73,15 @@ Raaka-aineiden ja ohjeiden väliset alaviivat mahdollistavat niiden selkeämmän
 
 ### Käyttäjän kirjautuminen sekvenssikaaviona
 
+<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/logIn.png">
+
 Kirjautumis näkymän Sign In -nappi laittaa liikkeelle seuraavan ketjun:
 
 ### Uuden käyttäjän luominen sekvenssikaaviona
 
 Uudenkäyttäjän luomisnäkymän Sign up -nappi laittaa liikkeelle seuraavan ketjun:
 
+<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/newUser.png">
 
 #Ohjelman rakenteeseen jääneet heikkoudet
 
