@@ -10,3 +10,5 @@
 | 4.4. | 2 | Tallennusmuodon testaaminen toisessa projektissa ja sen lisääminen tähän projektiin |
 | 7.4. | 8 | Lisäsin sovellukseen toiminnallisuuksia |
 | 8.4. | 6 | Dokementaation päivittämistä, checkstyle lisätty, testaukset luokkiin user ja recipe |
+| 13.4. | 2 | Listojen muokkaaminen toimiviksi |
+| 14.4. |  | |
