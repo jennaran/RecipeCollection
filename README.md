@@ -28,7 +28,7 @@ mvn test
 mvn test jacoco:report
 ```
 
-#### Rapotti avataan antamalla juuressa käsky:
+##### Rapotti avataan antamalla juuressa käsky:
 
 ```
 open target/site/jacoco/index.html
@@ -40,7 +40,7 @@ open target/site/jacoco/index.html
 mvn jxr:jxr checkstyle:checkstyle
 ```
 
-#### Rapotti avataan antamalla juuressa käsky:
+##### Rapotti avataan antamalla juuressa käsky:
 
 ```
 open /target/site/checkstyle.htm
@@ -52,7 +52,7 @@ open /target/site/checkstyle.htm
 mvn package 
 ```
 
-#### Jarin suorittaminen
+##### Jarin suorittaminen
 
 Target hakemistosta löytyy jar-tiedosto RecipeCollection-1.0-SNAPSHOT.jar
 
