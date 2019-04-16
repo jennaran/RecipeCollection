@@ -55,11 +55,8 @@ public class RecipeCollectionUi extends Application {
     
     @Override
     public void init() throws Exception {
-        Properties prop = new Properties();
-        prop.load(new FileInputStream("config.properties"));
-
-        String userFile = prop.getProperty("user");
-        String recipeFile = prop.getProperty("recipe");
+        String userFile = "user.txt";
+        String recipeFile = "recipe.txt";
         
         DerbyUserDAO userDao = new DerbyUserDAO(userFile);
         DerbyRecipeDAO recipeDao = new DerbyRecipeDAO(userDao, recipeFile);
@@ -251,6 +248,8 @@ public class RecipeCollectionUi extends Application {
         
         border.setRight(border2);
         border.setLeft(grid);
+        
+        
         
         this.newRecipeScene = new Scene(border, sceneL, sceneK);
         return newRecipeScene;
