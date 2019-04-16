@@ -131,6 +131,7 @@ public class RecipeCollectionUi extends Application {
     public Scene newUserScene() {
         BorderPane border = new BorderPane();
         border.setCenter(loginSigninBox("Sign up", "Sign up", 1));
+        //border.setPadding(new Insets(10, 10, 10, 10));
         
         this.newUserScene = new Scene(border, sceneL, sceneK);
         return newUserScene;
@@ -147,6 +148,7 @@ public class RecipeCollectionUi extends Application {
         BorderPane border = new BorderPane();
         border.setTop(name);
         border.setCenter(borderDown);
+        border.setPadding(new Insets(10, 10, 10, 10));
         
         this.newRecipeScene = new Scene(border, sceneL, sceneK);
         return newRecipeScene;
@@ -289,6 +291,8 @@ public class RecipeCollectionUi extends Application {
         vbox.getChildren().add(text);
         vbox.getChildren().add(instructions);
         vbox.setPrefSize(sceneL / 2, sceneK / 2);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.setSpacing(20);
         return vbox;
     }
     
@@ -301,6 +305,8 @@ public class RecipeCollectionUi extends Application {
         vbox.getChildren().add(text);
         vbox.getChildren().add(list);
         vbox.setPrefSize(sceneL / 2, sceneK / 2);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.setSpacing(20);
         return vbox;
     }
     

@@ -93,7 +93,7 @@ public class DerbyRecipeDAO implements RecipeDAO {
     public void saveToFile() throws Exception {
         try (FileWriter writer = new FileWriter(new File(recipeFile))) {
             for (Recipe r : recipes) {
-                writer.write(r.getUniqueID() + ";" + r.getName() + ";" + r.getIngredients() + ";" + r.getInstruction() + ";" + r.getUser().getUsername() + "\n");
+                writer.write(r.getUniqueID() + ";" + r.getName() + ";" + r.getIngredientsString()+ ";" + r.getInstruction() + ";" + r.getUser().getUsername() + "\n");
             }
         } catch (Exception e) {
             System.out.println("voi ei :(");
