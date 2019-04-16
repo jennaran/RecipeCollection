@@ -62,18 +62,23 @@ public class UserTest {
     @Test
     public void testEquals_WithNull() {
         User nullUser = null;
-        assertNotSame(user, nullUser); 
+        assertNotSame(user, nullUser);
+        assertFalse(user.equals(nullUser) && nullUser.equals(user));
     }
     
     @Test
-    public void testEquals_WithNoUser() {
+    public void testEquals_WithWrongObject() {
         Recipe recipe = new Recipe("name", user);
         assertNotSame(user, recipe); 
+        assertFalse(user.equals(recipe) && recipe.equals(user));
+
     }
     @Test
     public void testEquals_DifferendPasswords() {
-        User user2 = new User("username", "wordpass");
+        User user2 = new User("username", "wordpassu");
         assertNotSame(user, user2); 
         assertNotEquals(user.hashCode(), user2.hashCode());
+        assertFalse(user.equals(user2) && user2.equals(user));
+
     }
 }

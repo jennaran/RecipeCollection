@@ -1,22 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
+import domain.User;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 
-/**
- *
- * @author Jenna
- */
 public class DerbyUserDAOTest {
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+    File userFile;  
+    UserDAO dao;
     
     public DerbyUserDAOTest() {
     }
@@ -30,16 +33,60 @@ public class DerbyUserDAOTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+        userFile = testFolder.newFile("userTestFile.txt");
+        
+        try (FileWriter fw = new FileWriter(userFile.getAbsolutePath())) {
+            fw.write("testUsername;testPassword\n");
+        } 
+        this.dao = new DerbyUserDAO(userFile.getAbsolutePath());
     }
     
     @After
     public void tearDown() {
+        this.userFile.delete();
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test 
+    public void usersAreSavedCorrectly() {
+        List<User> users = dao.listAll();
+        assertEquals(1, users.size());
+        User testUser = users.get(0);
+        assertEquals("testUsername", testUser.getUsername());
+        assertEquals("testPassword", testUser.getPassword());
+    }
+    
+    @Test
+    public void existingUserIsFound() {
+        User testUser = dao.searchByUsername("testUsername");
+        assertEquals("testUsername", testUser.getUsername());
+        assertEquals("testPassword", testUser.getPassword());
+    }
+    
+    @Test
+    public void nonexistingUserIsNotFound() {
+        User testUser = dao.searchByUsername("matti");
+        assertEquals(null, testUser);
+    }
+    
+    @Test
+    public void createdUserIsFound() throws Exception {
+        User newUser = new User("TU", "SS");
+        dao.create(newUser);
+        
+        User newUserDao = dao.searchByUsername("TU");
+        assertEquals("TU", newUserDao.getUsername());
+        assertEquals("SS", newUserDao.getPassword());
+    }
+    
+    @Test
+    public void deletedUserIsNotFound() throws Exception {
+        User testUser = dao.searchByUsername("testUsername");
+        dao.delete(testUser);
+        List<User> users = dao.listAll();
+        assertEquals(0, users.size());
+        User deletedUser = dao.searchByUsername("testUsername");
+        assertEquals(null, deletedUser);
+    }
+    
 }

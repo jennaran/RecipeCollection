@@ -54,7 +54,7 @@ public class RecipeTest {
     public void settingAndGettingIngredientsWorks() {
         String ingredients = "cheese_sugar_cake";
         recipe.setIngredients(ingredients);
-        assertEquals(ingredients, recipe.getIngredients());
+        assertEquals(ingredients, recipe.getIngredientsString());
     }
     
     @Test

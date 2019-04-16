@@ -38,10 +38,15 @@ public class Recipe {
         return user;
     }
 	
-    public String getIngredients() {
+    public String getIngredientsString() {
+        //delete??
         String result = "";
         result = ingredients.stream().map((ingredient) -> ingredient + "_").reduce(result, String::concat);
 	return result.substring(0, result.length() - 1);
+	}
+    
+    public List<String> getIngredientsList() {
+        return this.ingredients;
 	}
     
     public void setIngredients(String ingredients) {

@@ -5,17 +5,19 @@ import domain.Recipe;
 import domain.User;
 import java.io.File;
 import java.io.FileWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class DerbyRecipeDAO implements RecipeDAO {
     private List<Recipe> recipes;
     private final String recipeFile;
+    private int i;
     
     public DerbyRecipeDAO(UserDAO users, String recipeFile) throws Exception {
+        this.i=0;
         this.recipeFile = recipeFile;
         this.recipes = new ArrayList();
         
@@ -42,25 +44,29 @@ public class DerbyRecipeDAO implements RecipeDAO {
 
     @Override
     public void create(Recipe recipe) throws Exception {
+        //no tests before Recipe-class is ok
         recipe.setUniqueID(generateId());
         this.recipes.add(recipe);
         saveToFile();
-        
     }
 
     @Override
-    public Recipe searchByKey(Integer id) throws Exception {
+    public Recipe searchByKey(Integer id) {
+        //delete maybe? no tests
+        //searchByRecipe
         return this.recipes.stream().filter(r -> r.getUniqueID() == id).findFirst().orElse(null);
     }
 
     @Override
     public boolean update(Recipe recipe) throws Exception {
+        //not done no tests
         return false;
     }
 
     @Override
     public void delete(Integer id) throws Exception {
-        Recipe recipe = recipes.stream().filter(r -> r.getUniqueID() == id).findFirst().orElse(null);
+        //not used yet, so no tests
+        Recipe recipe = recipes.stream().filter(r -> Objects.equals(r.getUniqueID(), id)).findFirst().orElse(null);
         this.recipes.remove(recipe);
         saveToFile();
     }
@@ -68,29 +74,29 @@ public class DerbyRecipeDAO implements RecipeDAO {
     @Override
     public void delete(User user) throws Exception {
         List<Recipe> usersRecipes = listUsersAll(user);
-        for (Recipe recipe : usersRecipes) {
+        usersRecipes.forEach((recipe) -> {
             this.recipes.remove(recipe);
-        }
+        });
         saveToFile();
     }
 
     @Override
-    public List<Recipe> listUsersAll(User user) throws Exception {
+    public List<Recipe> listUsersAll(User user) {
         List<Recipe> usersRecipes = recipes.stream().filter(r -> r.getUser().getUsername().equals(user.getUsername())).collect(Collectors.toList());
         return usersRecipes;
     }
     private int generateId() {
-        return recipes.size() + 1;
+        i = i++;
+        return i;
     }
 
-    @Override
     public void saveToFile() throws Exception {
         try (FileWriter writer = new FileWriter(new File(recipeFile))) {
             for (Recipe r : recipes) {
                 writer.write(r.getUniqueID() + ";" + r.getName() + ";" + r.getIngredients() + ";" + r.getInstruction() + ";" + r.getUser().getUsername() + "\n");
             }
         } catch (Exception e) {
-            
+            System.out.println("voi ei :(");
         }
     }
 

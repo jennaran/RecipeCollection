@@ -1,22 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
+import domain.FakeUserDAO;
+import domain.Recipe;
+import domain.User;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 
-/**
- *
- * @author Jenna
- */
 public class DerbyRecipeDAOTest {
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+    File userFile;  
+    RecipeDAO dao;
+    User user = new User("testName", "testPassword");
     
     public DerbyRecipeDAOTest() {
     }
@@ -30,16 +36,29 @@ public class DerbyRecipeDAOTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+        userFile = testFolder.newFile("userTestFile.txt");
+        UserDAO userDao = new FakeUserDAO();
+        userDao.create(user);
+        
+        try (FileWriter fw = new FileWriter(this.userFile.getAbsolutePath())) {
+            fw.write("1;pasta;sugar_pepper;mix_eat;testName\n");
+            fw.write("2;potatopie;potato_salt;cook_eat;testName\n");
+            fw.write("3;salt;salt;mix;name\n");
+        }
+        this.dao = new DerbyRecipeDAO(userDao, userFile.getAbsolutePath());
+        
     }
     
     @After
     public void tearDown() {
+        this.userFile.delete();
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void createWorks() {
+        //pitää eka päättää recipe-luokan tallennus muoto!!
+    }
+    
+    
 }

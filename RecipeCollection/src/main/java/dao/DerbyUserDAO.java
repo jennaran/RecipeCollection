@@ -37,14 +37,9 @@ public class DerbyUserDAO implements UserDAO {
     }
 
     @Override
-    public User searchByUsername(String username) throws Exception {
+    public User searchByUsername(String username) {
         User user = users.stream().filter(u -> u.getUsername().equals(username)).findFirst().orElse(null);
         return user;
-    }
-
-    @Override
-    public boolean update(User object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -54,11 +49,10 @@ public class DerbyUserDAO implements UserDAO {
     }
 
     @Override
-    public List<User> listAll() throws Exception {
+    public List<User> listAll(){
         return this.users;
     }
     
-     @Override
     public void saveToFile() throws Exception {
         try (FileWriter writer = new FileWriter(new File(userFile))) {
             for (User u : users) {

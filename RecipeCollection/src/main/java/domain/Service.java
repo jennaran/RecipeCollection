@@ -5,6 +5,8 @@ import dao.RecipeDAO;
 import dao.UserDAO;
 import java.sql.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 public class Service {
     //tarvitaanko @Autowired DerbyRecipeDAO;...;
@@ -39,8 +41,11 @@ public class Service {
         this.recipeDAO = recipeDAO;
     }
     
-    public boolean createNewRecipe(String name, String ingredients, String instruction) {
+    public boolean createNewRecipe(String name, List<String> listIngredients, String instructionWrong) {
         Recipe recipe = new Recipe(name, loggenInUser);
+        String ingredients = ingredientsStringAdding_(listIngredients);
+        String instruction = instructionsStringAdding_(instructionWrong);
+        
         recipe.setIngredients(ingredients);
         recipe.setInstruction(instruction);
         try {
@@ -50,6 +55,40 @@ public class Service {
         }
         return true;
     } 
+    
+    public String ingredientsStringAdding_(List<String> listIngredients) {
+        //might delete
+        String ingredients = "";
+        ingredients = listIngredients.stream().map((ingredient) -> ingredient + "_").reduce(ingredients, String::concat);
+	return ingredients.substring(0, ingredients.length() - 1);
+    }
+    
+    public String instructionsStringAdding_(String wrong) {
+        //might change to return a list 
+        //this also might not work very well...
+        String instructions = "";
+        instructions = wrong.replace("\n", "_");
+        return instructions;
+    }
+    
+    public Recipe findUsersRecipeByName(String name) {
+        List<Recipe> recipes = this.recipeDAO.listUsersAll(loggenInUser);
+        Recipe recipe = recipes.stream().filter(r -> r.getName().equals(name)).findFirst().orElse(null);
+        return recipe;
+    }
+    
+    public List<String> getRecipeIngredienstByRecipeName(String name) {
+        Recipe recipe = findUsersRecipeByName(name);
+        List<String> ingredientsList = recipe.getIngredientsList();
+        return ingredientsList;
+    }
+    
+    public String getRecipeInstructionsByRecipeName(String name) {
+        Recipe recipe = findUsersRecipeByName(name);
+        String Instructions = recipe.getInstruction();
+        Instructions = Instructions.replace("_", "\n");
+        return Instructions;
+    }
     
     public boolean createNewUser(String username, String password) throws Exception {
         if (userDao.searchByUsername(username) != null) {
@@ -64,7 +103,7 @@ public class Service {
         return true;
     } 
     
-    public boolean logIn(String username, String password) throws Exception {
+    public boolean logIn(String username, String password) {
         User user = userDao.searchByUsername(username);
         if (user != null) {
             if (user.getPassword().equals(password)) {
@@ -83,16 +122,22 @@ public class Service {
         this.loggenInUser = null;
     }
     
-    public void deleteAccount() throws Exception {
-        userDao.delete(this.loggenInUser);
-        this.recipeDAO.delete(loggenInUser);
+    public boolean deleteAccount() {
+        try {
+            userDao.delete(this.loggenInUser);
+            this.recipeDAO.delete(loggenInUser);
+        } catch (Exception ex) {
+            return false;
+        }
         logOut();
+        return true;
     }
     
-    public List<String> userRecipeNames() throws Exception {
+    public List<String> userRecipeNames() {
         List<Recipe> recipes = this.recipeDAO.listUsersAll(loggenInUser);
         List<String> recipeNames = recipes.stream().map(r -> r.getName()).collect(Collectors.toList());
         return recipeNames;
     }
+    
     
 }
