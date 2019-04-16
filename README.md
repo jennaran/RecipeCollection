@@ -12,7 +12,7 @@ Sovellusta voi käyttää usea käyttäjä, mutta sisältö on kaikille henkilö
 
 [Arkkitehtuuri](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
-[Relase]()
+[Release](https://github.com/jennaran/ot-harjoitustyo/releases/tag/v.1.0)
 
 ## Komentoriviltä suoritettavat toimenpiteet
 
