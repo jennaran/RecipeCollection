@@ -3,3 +3,6 @@
 3;makaronipiirakka;soker_suola_juusto;sekoita;jenna
 4;juustoleivos;soker_suola_juusto;sekoita;jenna
 5;silakkasalaatta;yi_fdsfd_dddd;dfiush_fdgjhb_hh;jenna
+0;Spagettikastike;härkis_tomaattimurska_sipuli_valkosipuli;Ruskista härkis, ja sipuli._Lisää tomaattimurska ja valkosipuli._Keitä lisäksi spagettia.;resepti
+0;kas;kan_mun_suola;Riko kaniksie;kani
+0;Nyhtissalaatti;nyhtis_salaatti_punasipuli_rukola;Sekoita_syö_nauti_tiskaa;jenna

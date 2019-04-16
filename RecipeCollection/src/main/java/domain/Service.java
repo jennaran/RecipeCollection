@@ -43,8 +43,8 @@ public class Service {
     
     public boolean createNewRecipe(String name, List<String> listIngredients, String instructionWrong) {
         Recipe recipe = new Recipe(name, loggenInUser);
-        String ingredients = ingredientsStringAdding_(listIngredients);
-        String instruction = instructionsStringAdding_(instructionWrong);
+        String ingredients = ingredientsStringAddingLine(listIngredients);
+        String instruction = instructionsStringAddingLine(instructionWrong);
         
         recipe.setIngredients(ingredients);
         recipe.setInstruction(instruction);
@@ -56,14 +56,14 @@ public class Service {
         return true;
     } 
     
-    public String ingredientsStringAdding_(List<String> listIngredients) {
+    public String ingredientsStringAddingLine(List<String> listIngredients) {
         //might delete
         String ingredients = "";
         ingredients = listIngredients.stream().map((ingredient) -> ingredient + "_").reduce(ingredients, String::concat);
 	return ingredients.substring(0, ingredients.length() - 1);
     }
     
-    public String instructionsStringAdding_(String wrong) {
+    public String instructionsStringAddingLine(String wrong) {
         //might change to return a list 
         //this also might not work very well...
         String instructions = "";

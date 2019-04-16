@@ -43,10 +43,10 @@ mvn jxr:jxr checkstyle:checkstyle
 ##### Rapotti avataan antamalla juuressa käsky:
 
 ```
-open /target/site/checkstyle.htm
+open target/site/checkstyle.html
 ```
 
-### Jaringenerointi
+### Jarin generointi
 
 ```
 mvn package 

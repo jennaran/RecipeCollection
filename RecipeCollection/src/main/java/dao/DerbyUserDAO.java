@@ -49,7 +49,7 @@ public class DerbyUserDAO implements UserDAO {
     }
 
     @Override
-    public List<User> listAll(){
+    public List<User> listAll() {
         return this.users;
     }
     

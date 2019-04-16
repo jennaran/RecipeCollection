@@ -4,10 +4,8 @@ package ui;
 import dao.DerbyRecipeDAO;
 import dao.DerbyUserDAO;
 import domain.Service;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -66,7 +64,7 @@ public class RecipeCollectionUi extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.stage = primaryStage;
-        Scene scene = buildBeginningScene();
+        Scene scene = BeginningScene();
         
         stage.setTitle("RecipeCollection");
         stage.setScene(scene);
@@ -77,33 +75,48 @@ public class RecipeCollectionUi extends Application {
         launch(args);
     }
     
-    public Scene buildBeginningScene() {
+    public Scene BeginningScene() {
         BorderPane border = new BorderPane();
         
-        border.setRight(loginSigninBox("Sign in", "Sign in", 0));
-        border.setLeft(middleButton("Create An Account", 1));
+        border.setLeft(loginSigninBox("Sign in", "Sign in", 0));
+        border.setRight(middleButton("Create An Account", 1));
         
         this.beginningScene= new Scene(border, sceneL, sceneK);
         return beginningScene;
     }
     
     public Scene loggedInScene() throws Exception {
-        BorderPane border = new BorderPane();
-        border.setRight(middleButton("Add A New Recipe", 2));
-        BorderPane borderIngredients = new BorderPane();
-        borderIngredients.setPrefWidth(sceneL / 2);
+        
+        BorderPane borderList = new BorderPane();
+        ArrayList<String> empty = new ArrayList<>();
+        borderList.setCenter(list(empty, 0));
         
         HBox searching = new HBox();
         searching.setPrefWidth(sceneL / 2);
+        searching.setSpacing(10);
+        
         Button search = new Button("Search");
+        
         TextField searchBy = new TextField();
-        searchBy.setPrefWidth(300);
+        searchBy.setPromptText("Search recipe by name");
+        searchBy.setPrefWidth(270);
         searching.getChildren().add(searchBy);
         searching.getChildren().add(search);
-        borderIngredients.setTop(searching);
-        ArrayList<String> empty = new ArrayList<>();
-        borderIngredients.setCenter(list(empty, 0));
         
+        Text text = new Text("Your Recipes");
+        text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        
+        VBox borderIngredients = new VBox();
+        borderIngredients.setPrefWidth(sceneL / 2);
+        borderIngredients.setPadding(new Insets(10, 10, 10, 10));
+        borderIngredients.setSpacing(10);
+        
+        borderIngredients.getChildren().add(text);
+        borderIngredients.getChildren().add(searching);
+        borderIngredients.getChildren().add(borderList);
+        
+        BorderPane border = new BorderPane();
+        border.setRight(middleButton("Add A New Recipe", 2));
         border.setLeft(borderIngredients);
         border.setTop(userMenu());
         
@@ -111,10 +124,10 @@ public class RecipeCollectionUi extends Application {
             String name = searchBy.getText();
             try {
                 if (name.isEmpty()) {
-                    borderIngredients.setCenter(list(empty, 0));
+                    borderList.setCenter(list(empty, 0));
                 } else {
                     ArrayList<String> names = this.service.userRecipeNames().stream().filter(r -> r.contains(name)).collect(Collectors.toCollection(ArrayList::new));
-                    borderIngredients.setCenter(list(names, 1));
+                    borderList.setCenter(list(names, 1));
                 }
             } catch (Exception ex) {
                 Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
@@ -152,28 +165,34 @@ public class RecipeCollectionUi extends Application {
     }
     
     public Scene newRecipeScene() throws Exception {
-        BorderPane border = new BorderPane();
-        
         this.addedIngredients = new ArrayList();
+        
+        TextField recipeNameField = new TextField();
+        recipeNameField.setPrefHeight(40);
+        recipeNameField.setPromptText("Name of the recipe");
+        recipeNameField.setPrefWidth(261);
         
         Text text = new Text("Ingredients");
         text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         
-        TextField recipeNameField = new TextField();
-        recipeNameField.setPromptText("Name of the recipe");
-        
         TextField addField = new TextField();
+        addField.setPromptText("Add ingredient");
+        addField.setPrefWidth(219);
         Button add = new Button("Add");
-        //lisää delete nappula tämän viereen, joka mahdollistaa listalta poistamisen ja uudelleen kirjoittamisen
+        Button delete = new Button("Delete");
         
         HBox addingStuff = new HBox();
-        addingStuff.getChildren().addAll(addField, add);
-        addingStuff.setPadding(new Insets(10, 0, 5, 0));
+        addingStuff.getChildren().addAll(addField, add, delete);
         addingStuff.setSpacing(10);
+        addingStuff.setPadding(new Insets(10, 0, 3, 0));
         
-        GridPane grid = new GridPane();
-        grid.setPrefWidth(sceneL / 2);
-        grid.setPadding(new Insets(10, 10, 10, 10));
+        VBox vbox1 = new VBox();
+        vbox1.setPrefWidth(sceneL / 2);
+        vbox1.setPadding(new Insets(10, 10, 10, 10));
+        vbox1.setSpacing(3);
+        
+        BorderPane borderList = new BorderPane();
+        borderList.setCenter(list(addedIngredients, 2));
         
         add.setOnMouseClicked(e -> {
             String newIngredient = addField.getText();
@@ -183,45 +202,38 @@ public class RecipeCollectionUi extends Application {
                 addedIngredients.add(newIngredient);
             }
             try {
-                StackPane list = list(addedIngredients, 2);
-                grid.add(list, 0, 3);
+                borderList.setCenter(list(addedIngredients, 2));
             } catch (Exception ex) {
                 Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
         });
         
-        StackPane list = list(addedIngredients, 3);
-        
-        grid.add(recipeNameField, 0, 0);
-        grid.add(text, 0, 1);
-        grid.add(addingStuff, 0, 2);
-        grid.add(list, 0, 3);
+        vbox1.getChildren().add(text);
+        vbox1.getChildren().add(addingStuff);
+        vbox1.getChildren().add(borderList);
         
         Text textInstructions = new Text("Instructions");
         textInstructions.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        
         TextArea addInstructions = new TextArea();
+        addInstructions.setPromptText("Add instructions here");
         addInstructions.setPrefSize(sceneL / 2 -20, sceneK - 90);
+        
+        VBox vbox2 = new VBox();
+        vbox2.setPrefWidth(sceneL / 2);
+        vbox2.setPadding(new Insets(10, 10, 10, 0));
+        vbox2.getChildren().add(textInstructions);
+        vbox2.getChildren().add(addInstructions);
+        vbox2.setPadding(new Insets(10, 10, 10, 10));
+        vbox2.setSpacing(10);
+        
+        BorderPane borderInner = new BorderPane();
+        borderInner.setRight(vbox2);
+        borderInner.setLeft(vbox1);
+
         
         Button backButton = new Button("Back");
         Button saveButton = new Button("Save");
         
-        
-        GridPane grid2 = new GridPane();
-        grid2.add(textInstructions, 0, 0);
-        grid2.add(backButton, 2, 0);
-        grid2.add(saveButton, 3, 0);
-        grid2.setPadding(new Insets(0, 0, 40, 0));
-        grid2.setHgap(10);
-        BorderPane border2 = new BorderPane();
-        
-        border2.setTop(grid2);
-        border2.setCenter(addInstructions);
-        border2.setPrefWidth(sceneL / 2);
-        border2.setPadding(new Insets(10, 10, 10, 10));
-        border2.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-
         backButton.setOnMouseClicked(e -> {
             stage.setScene(this.loggedInScene);
         });
@@ -237,21 +249,41 @@ public class RecipeCollectionUi extends Application {
                 this.addedIngredients.clear();
                 try {
                     list(this.addedIngredients, 2);
+                    this.loggedInScene = loggedInScene();
                 } catch (Exception ex) {
                     Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
             }
             stage.setScene(this.loggedInScene);
         });
         
+        HBox savingStuff = new HBox();
+        savingStuff.getChildren().addAll(backButton, saveButton);
+        savingStuff.setPadding(new Insets(0, 0, 0, 300));
+        savingStuff.setSpacing(10);
         
-        border.setRight(border2);
-        border.setLeft(grid);
+        BorderPane toRight = new BorderPane();
+        toRight.setRight(savingStuff);
+        
+        Text nameText = new Text("Name:");
+        nameText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        
+        HBox hboxTop = new HBox();
+        hboxTop.setPadding(new Insets(10, 10, 10, 10));
+        hboxTop.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        
+        hboxTop.getChildren().add((nameText));
+        hboxTop.getChildren().add(recipeNameField);
+        hboxTop.getChildren().add(toRight);
         
         
+        hboxTop.setSpacing(20);
         
-        this.newRecipeScene = new Scene(border, sceneL, sceneK);
+        BorderPane borderOut = new BorderPane();
+        borderOut.setTop(hboxTop);
+        borderOut.setCenter(borderInner);
+        
+        this.newRecipeScene = new Scene(borderOut, sceneL, sceneK);
         return newRecipeScene;
     }
     
@@ -409,34 +441,6 @@ public class RecipeCollectionUi extends Application {
         return menuBar;
     }
     
-    public StackPane list() throws Exception {
-        //delete????
-        //List is gonna be filled with user's recipe names
-        ObservableList<String> data = FXCollections.observableArrayList();
-
-        ListView<String> listView = new ListView<String>();
-        listView.setPrefSize(200, 250);
-        
-        List<String> recipeNames = service.userRecipeNames();
-        data.addAll(recipeNames);
-
-        listView.setItems(data);
-        listView.getSelectionModel().selectedItemProperty().addListener(
-            (ObservableValue<? extends String> ov, String old_val, 
-                String new_val) -> {
-                //getText
-                //set scene resepti
-                    System.out.println(new_val);
-
-        });
-
-        StackPane root = new StackPane();
-        root.getChildren().add(listView);
-        root.setPrefWidth(sceneL / 2);
-
-        return root;
-    }
-    
     public StackPane list(List<String> recipes, int i) throws Exception {
         //0 for recipe name list
         ObservableList<String> data = FXCollections.observableArrayList();
@@ -446,7 +450,7 @@ public class RecipeCollectionUi extends Application {
         listView.setPrefSize(200, 250);
         
         //jos haluaan kaikki reseptit
-        if(recipes.isEmpty() && i == 0) {
+        if(recipes.isEmpty() && i == 0 ) {
             recipes = service.userRecipeNames();
         }
         data.addAll(recipes);
@@ -455,11 +459,10 @@ public class RecipeCollectionUi extends Application {
         listView.getSelectionModel().selectedItemProperty().addListener(
             (ObservableValue<? extends String> ov, String old_val, 
                 String new_val) -> {
-                if (i == 0) {
+                if (i == 0 || i == 1) {
                     try {
                         this.stage.setScene(recipeScene(new_val));
                     } catch (Exception ex) {
-                        System.out.println("ei toimi");
                         Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }

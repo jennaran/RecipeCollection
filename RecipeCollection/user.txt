@@ -1,2 +1,4 @@
 jenna;jenna
 jenR;jenR
+resepti;makaroonilaatikko
+kani;inak
