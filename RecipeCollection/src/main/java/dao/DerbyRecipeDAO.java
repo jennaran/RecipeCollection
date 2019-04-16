@@ -17,7 +17,6 @@ public class DerbyRecipeDAO implements RecipeDAO {
     private int i;
     
     public DerbyRecipeDAO(UserDAO users, String recipeFile) throws Exception {
-        this.i = 0;
         this.recipeFile = recipeFile;
         this.recipes = new ArrayList();
         
@@ -86,8 +85,7 @@ public class DerbyRecipeDAO implements RecipeDAO {
         return usersRecipes;
     }
     private int generateId() {
-        i = i++;
-        return i;
+        return this.recipes.size();
     }
 
     public void saveToFile() throws Exception {
