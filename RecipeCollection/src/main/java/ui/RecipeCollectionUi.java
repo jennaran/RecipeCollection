@@ -79,14 +79,13 @@ public class RecipeCollectionUi extends Application {
         BorderPane border = new BorderPane();
         
         border.setLeft(loginSigninBox("Sign in", "Sign in", 0));
-        border.setRight(middleButton("Create An Account", 1));
+        border.setRight(middleButton("Create An Account", "Join Today!", 30));
         
         this.beginningScene= new Scene(border, sceneL, sceneK);
         return beginningScene;
     }
     
     public Scene loggedInScene() throws Exception {
-        
         BorderPane borderList = new BorderPane();
         ArrayList<String> empty = new ArrayList<>();
         borderList.setCenter(list(empty, 0));
@@ -116,7 +115,7 @@ public class RecipeCollectionUi extends Application {
         borderIngredients.getChildren().add(borderList);
         
         BorderPane border = new BorderPane();
-        border.setRight(middleButton("Add A New Recipe", 2));
+        border.setRight(middleButton("Add A New Recipe", "Got a new Recipe?",0));
         border.setLeft(borderIngredients);
         border.setTop(userMenu());
         
@@ -139,8 +138,13 @@ public class RecipeCollectionUi extends Application {
     }
     
     public Scene newUserScene() {
+        Button back = new Button("Back");
+        
         BorderPane border = new BorderPane();
         border.setCenter(loginSigninBox("Sign up", "Sign up", 1));
+        border.setRight(back);
+        border.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        border.setPadding(new Insets(10, 10, 10, 10));
         //border.setPadding(new Insets(10, 10, 10, 10));
         
         this.newUserScene = new Scene(border, sceneL, sceneK);
@@ -194,6 +198,20 @@ public class RecipeCollectionUi extends Application {
         BorderPane borderList = new BorderPane();
         borderList.setCenter(list(addedIngredients, 2));
         
+        delete.setOnAction(e -> {
+            String deleteIngredient = addField.getText();
+            deleteIngredient = deleteIngredient.trim();
+            addField.clear();
+            if (!addedIngredients.isEmpty()) {
+                this.addedIngredients.remove(deleteIngredient);
+            }
+            try {
+                borderList.setCenter(list(addedIngredients, 2));
+            } catch (Exception ex) {
+                Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
         add.setOnMouseClicked(e -> {
             String newIngredient = addField.getText();
             addField.clear();
@@ -220,17 +238,16 @@ public class RecipeCollectionUi extends Application {
         
         VBox vbox2 = new VBox();
         vbox2.setPrefWidth(sceneL / 2);
-        vbox2.setPadding(new Insets(10, 10, 10, 0));
+        //vbox2.setPadding(new Insets(10, 10, 10, 0));
         vbox2.getChildren().add(textInstructions);
         vbox2.getChildren().add(addInstructions);
         vbox2.setPadding(new Insets(10, 10, 10, 10));
-        vbox2.setSpacing(10);
+        vbox2.setSpacing(13);
         
         BorderPane borderInner = new BorderPane();
         borderInner.setRight(vbox2);
         borderInner.setLeft(vbox1);
 
-        
         Button backButton = new Button("Back");
         Button saveButton = new Button("Save");
         
@@ -241,7 +258,7 @@ public class RecipeCollectionUi extends Application {
         saveButton.setOnMouseClicked(e -> {
             String instuctions = addInstructions.getText();
             String recipeName = recipeNameField.getText();
-            
+            if (!instuctions.isEmpty() && !recipeName.isEmpty() && !addedIngredients.isEmpty()) {
             if (this.service.createNewRecipe(recipeName, addedIngredients, instuctions)) {
                 //reseptin luominen onnistuu
                 addInstructions.clear();
@@ -255,6 +272,7 @@ public class RecipeCollectionUi extends Application {
                 }
             }
             stage.setScene(this.loggedInScene);
+            }
         });
         
         HBox savingStuff = new HBox();
@@ -287,19 +305,24 @@ public class RecipeCollectionUi extends Application {
         return newRecipeScene;
     }
     
-    public BorderPane middleButton(String text, int nro) {
+    public BorderPane middleButton(String buttonText, String headText, int nro) {
         //nro 1 stands for create account and 2 for new recipe
-        BorderPane border = new BorderPane();
-        Button button = new Button(text);
+        
+        Text text = new Text(headText);
+        text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        Button button = new Button(buttonText);
         button.setMinHeight(60);
+        
+        BorderPane border = new BorderPane();
         border.setPrefWidth(sceneL / 2);
-        
         border.setCenter(button);
+        border.setTop(text);
+        border.setPadding(new Insets(135, 100, 135, 90 + nro));
         
-        if (nro == 1) {
+        if (nro == 30) {
             button.setOnMouseClicked(e -> {
             stage.setScene(newUserScene());});
-        } else if (nro == 2) {
+        } else if (nro == 0) {
             button.setOnMouseClicked(e -> {
                 try {
                     stage.setScene(newRecipeScene());
@@ -367,10 +390,14 @@ public class RecipeCollectionUi extends Application {
         downButton.setOnMouseClicked(e -> {
             if (i == 0) {
                 String un = userTextField.getText();
+                System.out.println(un);
                 String pw = pwField.getText();
+                System.out.println(pw);
                 try {
                     if (service.logIn(un, pw)) {
-                        stage.setScene(loggedInScene());
+                        System.out.println("true");
+                        this.stage.setScene(loggedInScene());
+                        System.out.println("scene set");
                         userTextField.clear();
                         pwField.clear();
                     } else {

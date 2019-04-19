@@ -4,6 +4,7 @@ package domain;
 import dao.RecipeDAO;
 import dao.UserDAO;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -135,9 +136,13 @@ public class Service {
     
     public List<String> userRecipeNames() {
         List<Recipe> recipes = this.recipeDAO.listUsersAll(loggenInUser);
+        if (recipes == null) {
+            List<String> recipeNames = new ArrayList();
+            return recipeNames;
+        }
+        
         List<String> recipeNames = recipes.stream().map(r -> r.getName()).collect(Collectors.toList());
         return recipeNames;
     }
-    
-    
+
 }

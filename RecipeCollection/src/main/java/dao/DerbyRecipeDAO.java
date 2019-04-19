@@ -73,6 +73,9 @@ public class DerbyRecipeDAO implements RecipeDAO {
     @Override
     public void delete(User user) throws Exception {
         List<Recipe> usersRecipes = listUsersAll(user);
+        if (usersRecipes == null) {
+            return;
+        }
         usersRecipes.forEach((recipe) -> {
             this.recipes.remove(recipe);
         });
@@ -82,6 +85,9 @@ public class DerbyRecipeDAO implements RecipeDAO {
     @Override
     public List<Recipe> listUsersAll(User user) {
         List<Recipe> usersRecipes = recipes.stream().filter(r -> r.getUser().getUsername().equals(user.getUsername())).collect(Collectors.toList());
+        if (usersRecipes.isEmpty()) {
+            return null;
+        }
         return usersRecipes;
     }
     private int generateId() {
