@@ -25,6 +25,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -64,7 +65,7 @@ public class RecipeCollectionUi extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.stage = primaryStage;
-        Scene scene = BeginningScene();
+        Scene scene = beginningScene();
         
         stage.setTitle("RecipeCollection");
         stage.setScene(scene);
@@ -75,7 +76,7 @@ public class RecipeCollectionUi extends Application {
         launch(args);
     }
     
-    public Scene BeginningScene() {
+    public Scene beginningScene() {
         BorderPane border = new BorderPane();
         
         border.setLeft(loginSigninBox("Sign in", "Sign in", 0));
@@ -145,7 +146,10 @@ public class RecipeCollectionUi extends Application {
         border.setRight(back);
         border.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         border.setPadding(new Insets(10, 10, 10, 10));
-        //border.setPadding(new Insets(10, 10, 10, 10));
+        
+        back.setOnAction(e -> {
+            this.stage.setScene(beginningScene());
+        });
         
         this.newUserScene = new Scene(border, sceneL, sceneK);
         return newUserScene;
@@ -153,16 +157,30 @@ public class RecipeCollectionUi extends Application {
     
     public Scene recipeScene(String recipeName) throws Exception {
         
-        Text name = new Text(recipeName);
-        name.setFont(Font.font("Tahoma", FontWeight.NORMAL, 28));
         BorderPane borderDown = new BorderPane();
         borderDown.setRight(instructions(recipeName));
-        borderDown.setLeft(ingedients(recipeName));
+        borderDown.setLeft(ingredients(recipeName));
+        
+        Button back = new Button("Back");
+        Button edit = new Button("Edit");
+        Text name = new Text(recipeName);
+        name.setFont(Font.font("Tahoma", FontWeight.NORMAL, 28));
+        
+        HBox hb = new HBox();
+        hb.getChildren().add(name);
+        hb.getChildren().add(edit);
+        hb.getChildren().add(back);
+        hb.setSpacing(10);
         
         BorderPane border = new BorderPane();
-        border.setTop(name);
+        border.setTop(hb);
         border.setCenter(borderDown);
+        
         border.setPadding(new Insets(10, 10, 10, 10));
+        
+        back.setOnAction(e -> {
+            this.stage.setScene(this.loggedInScene);
+        });
         
         this.newRecipeScene = new Scene(border, sceneL, sceneK);
         return newRecipeScene;
@@ -233,7 +251,8 @@ public class RecipeCollectionUi extends Application {
         Text textInstructions = new Text("Instructions");
         textInstructions.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         TextArea addInstructions = new TextArea();
-        addInstructions.setPromptText("Add instructions here");
+        addInstructions.setWrapText(true);
+        addInstructions.setPromptText("Add instructions here\r1.\r2.\r3.");
         addInstructions.setPrefSize(sceneL / 2 -20, sceneK - 90);
         
         VBox vbox2 = new VBox();
@@ -250,6 +269,9 @@ public class RecipeCollectionUi extends Application {
 
         Button backButton = new Button("Back");
         Button saveButton = new Button("Save");
+        Tooltip tooltip = new Tooltip();
+        tooltip.setText("Name must be unique. \nFields can't be empty.");
+        saveButton.setTooltip(tooltip);
         
         backButton.setOnMouseClicked(e -> {
             stage.setScene(this.loggedInScene);
@@ -259,19 +281,19 @@ public class RecipeCollectionUi extends Application {
             String instuctions = addInstructions.getText();
             String recipeName = recipeNameField.getText();
             if (!instuctions.isEmpty() && !recipeName.isEmpty() && !addedIngredients.isEmpty()) {
-            if (this.service.createNewRecipe(recipeName, addedIngredients, instuctions)) {
-                //reseptin luominen onnistuu
-                addInstructions.clear();
-                recipeNameField.clear();
-                this.addedIngredients.clear();
-                try {
-                    list(this.addedIngredients, 2);
-                    this.loggedInScene = loggedInScene();
-                } catch (Exception ex) {
-                    Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
+                if (this.service.createNewRecipe(recipeName, addedIngredients, instuctions)) {
+                    //reseptin luominen onnistuu
+                    addInstructions.clear();
+                    recipeNameField.clear();
+                    this.addedIngredients.clear();
+                    try {
+                        list(this.addedIngredients, 2);
+                        this.loggedInScene = loggedInScene();
+                    } catch (Exception ex) {
+                        Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    stage.setScene(this.loggedInScene);
                 }
-            }
-            stage.setScene(this.loggedInScene);
             }
         });
         
@@ -306,8 +328,8 @@ public class RecipeCollectionUi extends Application {
     }
     
     public BorderPane middleButton(String buttonText, String headText, int nro) {
-        //nro 1 stands for create account and 2 for new recipe
-        
+        //30 for new account 
+        //0 for new recipe
         Text text = new Text(headText);
         text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         Button button = new Button(buttonText);
@@ -341,6 +363,7 @@ public class RecipeCollectionUi extends Application {
         Text instructions = new Text();
         String instructionText = service.getRecipeInstructionsByRecipeName(name);
         instructions.setText(instructionText);
+        instructions.setWrappingWidth(sceneL / 2 - 30);
         VBox vbox = new VBox();
         vbox.getChildren().add(text);
         vbox.getChildren().add(instructions);
@@ -350,11 +373,11 @@ public class RecipeCollectionUi extends Application {
         return vbox;
     }
     
-    public VBox ingedients(String name) throws Exception {
-        Text text = new Text("Instructions");
+    public VBox ingredients(String name) throws Exception {
+        Text text = new Text("Ingredients");
         text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        List<String> ingedients = this.service.getRecipeIngredienstByRecipeName(name);
-        StackPane list = list(ingedients, 3);
+        List<String> ingredients = this.service.getRecipeIngredienstByRecipeName(name);
+        StackPane list = list(ingredients, 3);
         VBox vbox = new VBox();
         vbox.getChildren().add(text);
         vbox.getChildren().add(list);
@@ -365,7 +388,7 @@ public class RecipeCollectionUi extends Application {
     }
     
     public GridPane loginSigninBox(String text, String button, int i) {
-        //0 for signing in and 1 for signing up
+        //0 for signing in and 1 for signing up (NEW)
         GridPane grid = gridPane();
         //maybe set prefsize to textFields????????????
         Text upText = new Text(text);
@@ -390,14 +413,10 @@ public class RecipeCollectionUi extends Application {
         downButton.setOnMouseClicked(e -> {
             if (i == 0) {
                 String un = userTextField.getText();
-                System.out.println(un);
                 String pw = pwField.getText();
-                System.out.println(pw);
                 try {
                     if (service.logIn(un, pw)) {
-                        System.out.println("true");
                         this.stage.setScene(loggedInScene());
-                        System.out.println("scene set");
                         userTextField.clear();
                         pwField.clear();
                     } else {
@@ -441,6 +460,7 @@ public class RecipeCollectionUi extends Application {
     public MenuBar userMenu() {
         String username = service.getLoggenInUser().getUsername();
         Menu userMenu = new Menu(username);
+        userMenu.setStyle("-fx-background-color:#FA8072;");
         MenuItem sighOut = new MenuItem("Sign out");
         MenuItem delete = new MenuItem("Delete account");
         

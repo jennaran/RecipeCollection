@@ -12,12 +12,14 @@ public class Recipe {
     private final User user;
 
     public Recipe(Integer uniqueID, String name, User user) {
+        //used when updating- maybe 
         this.uniqueID = uniqueID;
         this.name = name;
         this.user = user;
     }
 
     public Recipe(String name, User user) {
+        //used when creating new (from service and recipeDAO sets id)
         this.name = name;
         this.user = user;
     }

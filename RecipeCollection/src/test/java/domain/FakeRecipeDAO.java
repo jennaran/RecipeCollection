@@ -9,11 +9,13 @@ import java.util.stream.Collectors;
 
 public class FakeRecipeDAO implements RecipeDAO{
     private List<Recipe> recipes = new ArrayList<>();
+    private List<Recipe> allRecipes = new ArrayList<>();
 
     @Override
     public void create(Recipe recipe) throws Exception {
-        recipe.setUniqueID(recipes.size()+1);
+        recipe.setUniqueID(allRecipes.size()+1);
         this.recipes.add(recipe);
+        this.allRecipes.add(recipe);
     }
 
     @Override

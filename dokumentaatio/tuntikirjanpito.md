@@ -14,3 +14,7 @@
 | 14.4. | 5 | Reseptejä voi nyt lisätä |
 | 15.4. | 2 | Testejä |
 | 16.4. | 3 | Reseptejä voi nyt tutkia |
+| 19.4 | 2 | Paikansin ja korjasin vian, joka esti uusia käyttäjiä kirjautumasta sisään |
+| 20.4. | 4 | Asettelujen korjailu esim. reseptin luonti -näkymässä. |
+| 22.4. | 2 | Muutaman back-napin asennus ja perehtyminen TextFieldin ja TextArean rajoittamiseen ja niiden toteuttaminen |
+| *Yhteensä* | 53 |  |

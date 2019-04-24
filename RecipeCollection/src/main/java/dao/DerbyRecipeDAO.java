@@ -13,12 +13,13 @@ import java.util.stream.Collectors;
 
 public class DerbyRecipeDAO implements RecipeDAO {
     private List<Recipe> recipes;
+    private List<Recipe> allRecipes;
     private final String recipeFile;
-    private int i;
     
     public DerbyRecipeDAO(UserDAO users, String recipeFile) throws Exception {
         this.recipeFile = recipeFile;
         this.recipes = new ArrayList();
+        this.allRecipes = new ArrayList();
         
         try {
             Scanner reader = new Scanner(new File(recipeFile));
@@ -32,6 +33,7 @@ public class DerbyRecipeDAO implements RecipeDAO {
                 recipe.setInstruction(parts[3]);
                 
                 recipes.add(recipe);
+                allRecipes.add(recipe);
             }
             
         } catch (Exception e) {
@@ -43,9 +45,9 @@ public class DerbyRecipeDAO implements RecipeDAO {
 
     @Override
     public void create(Recipe recipe) throws Exception {
-        //no tests before Recipe-class is ok
         recipe.setUniqueID(generateId());
         this.recipes.add(recipe);
+        this.allRecipes.add(recipe);
         saveToFile();
     }
 
@@ -84,14 +86,15 @@ public class DerbyRecipeDAO implements RecipeDAO {
 
     @Override
     public List<Recipe> listUsersAll(User user) {
-        List<Recipe> usersRecipes = recipes.stream().filter(r -> r.getUser().getUsername().equals(user.getUsername())).collect(Collectors.toList());
+        List<Recipe> usersRecipes = new ArrayList<>();
+        usersRecipes = recipes.stream().filter(r -> r.getUser().getUsername().equals(user.getUsername())).collect(Collectors.toList());
         if (usersRecipes.isEmpty()) {
             return null;
         }
         return usersRecipes;
     }
     private int generateId() {
-        return this.recipes.size();
+        return this.allRecipes.size();
     }
 
     public void saveToFile() throws Exception {

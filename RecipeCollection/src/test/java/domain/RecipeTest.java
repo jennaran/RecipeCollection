@@ -13,6 +13,7 @@ public class RecipeTest {
     Recipe recipe;
     Recipe noId;
     User user;
+    
     public RecipeTest() {
     }
     
