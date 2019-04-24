@@ -58,20 +58,20 @@ Reseptin nimeä painalla päästään tutkimaan reseptiä.
 
 <img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_uusiResepti.png">
 
-*Name:*
+#### Name:
 
 Ylhäällä olevaan tektikenttään kirjoitetaan uuden reseptin nimi. Nimen tulee olla uniikki.
 
-*Ingredients*
+#### Ingredients
 
 Aineksia lisätään kirjoittamalla uusi aines ja sen määrä (esim. jauhoja 5dl) vasemmalla olevaan tekstikenttään ja painamalla _Add_ -nappulaa.
 Aineksen saa poistettua kirjoittamalla se uudestaan tekstikenttään ja painamalla _Delete_ -nappia.
 
-*Instructions*
+#### Instructions
 
 Oikealla olevaan tekstikenttään voi lisätä ohjeet haluamassaan muodossa. 
 
-*Napit*
+#### Napit
 
 _Back_ -napista pääsee takaisin päänäkymään.
 
