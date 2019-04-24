@@ -3,68 +3,120 @@ package domain;
 
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * This is a class for recipes
+ */
 public class Recipe {
     private Integer uniqueID;
     private final String name;
     private List<String> ingredients;
     private List<String> instructions;
     private final User user;
-
+    
+    /**
+    * Sets constructors when unique id is known
+    * (when recipe is updated)
+    *
+    * @param uniqueID recipe's id given by someone
+    * @param name recipe's name
+    * @param user who owns the recipe
+    * 
+    */
     public Recipe(Integer uniqueID, String name, User user) {
-        //used when updating- maybe 
         this.uniqueID = uniqueID;
         this.name = name;
         this.user = user;
     }
-
+    /**
+    * Sets constructors when recipe is created for the first time
+    *
+    * @param name recipe's name
+    * @param user who owns the recipe
+    * 
+    */
     public Recipe(String name, User user) {
-        //used when creating new (from service and recipeDAO sets id)
         this.name = name;
         this.user = user;
     }
-
+    /**
+    * Sets uniqueID for recipe
+    * 
+    * @param uniqueID a number that is generated in RecipeDAO
+    */
     public void setUniqueID(Integer uniqueID) {
         this.uniqueID = uniqueID;
     }
-        
+    /**
+    * Returns unique id
+    * 
+    * @return id
+    */   
     public Integer getUniqueID() {
         return uniqueID;
     }
-    
+    /**
+    * Returns recipe's name
+    * 
+    * @return name
+    */ 
     public String getName() {
         return name;
     }
-
+    /**
+    * Returns the owner of the recipe
+    * 
+    * @return the owner
+    */ 
     public User getUser() {
         return user;
     }
-	
+    /**
+    * This method modifies the list of ingredients into String form by adding _
+    * between all the ingredients so that it can be used
+    * properly in other methods
+    *
+    * @return ingredients as String
+    */
     public String getIngredientsString() {
-        //delete??
         String result = "";
         result = ingredients.stream().map((ingredient) -> ingredient + "_").reduce(result, String::concat);
 	return result.substring(0, result.length() - 1);
 	}
-    
+    /**
+    * Returns ingredients as a list
+    * 
+    * @return a list of ingredients
+    */ 
     public List<String> getIngredientsList() {
         return this.ingredients;
 	}
-    
+    /**
+    * Sets ingredients to a list
+    * 
+    * @param ingredients Ingredients given as a String where they are separated with _
+    */ 
     public void setIngredients(String ingredients) {
 	this.ingredients = Arrays.asList(ingredients.split("_"));
         
     }
-	
+    /**
+    * This method modifies the list of instructions into String form by adding _
+    * between all the ingredients so that it can be used
+    * properly in other methods
+    * 
+    * @return name
+    */ 
     public String getInstruction() {
     String result = "";
     result = instructions.stream().map((instruction) -> instruction + "_").reduce(result, String::concat);
 	return result.substring(0, result.length() - 1);
     }
-    
+    /**
+    * Sets instructions to a list
+    * 
+    * @param instruction instructions given as a String where they are separated with _
+    */ 
     public void setInstruction(String instruction) {
 	this.instructions = Arrays.asList(instruction.split("_"));
     }
-    
-    //indentation Indentation 'method def' child have incorrect indentation level 4, expected level should be 8
 }

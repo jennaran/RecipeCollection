@@ -6,6 +6,8 @@ Sovellusta voi käyttää usea käyttäjä, mutta sisältö on kaikille henkilö
 
 ## Dokumentaatio
 
+[Käyttöohje](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
+
 [Vaatimusmäärittely](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/alustava_maarittelydokumentti.md)
 
 [Tuntikirjanpito](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
@@ -61,4 +63,16 @@ Sen voi suorittaa käskyllä:
 
 ```
 java -jar RecipeCollection-1.0-SNAPSHOT.jar
+```
+
+### JavaDocin generointi
+
+```
+mvn javadoc:javadoc
+```
+
+##### JavaDockin avaaminen
+
+```
+open target/site/apidocs/
 ```

@@ -4,18 +4,29 @@ package dao;
 import domain.Recipe;
 import domain.User;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-
+/**
+ * Provides methods for managing recipe.txt (the file where recipes are saved)
+ */
 public class DerbyRecipeDAO implements RecipeDAO {
     private List<Recipe> recipes;
     private List<Recipe> allRecipes;
     private final String recipeFile;
     
+    /**
+    * Sets constructors
+    * 
+    * @param recipeFile recipe.txt
+    * @param users userDAO
+    * @throws java.lang.Exception 
+    * 
+    */
     public DerbyRecipeDAO(UserDAO users, String recipeFile) throws Exception {
         this.recipeFile = recipeFile;
         this.recipes = new ArrayList();
@@ -36,13 +47,21 @@ public class DerbyRecipeDAO implements RecipeDAO {
                 allRecipes.add(recipe);
             }
             
-        } catch (Exception e) {
+        } catch (FileNotFoundException | NumberFormatException e) {
             FileWriter writer = new FileWriter(new File(this.recipeFile));
             writer.close();
         }
         
     }
-
+    /**
+    * Adds new recipe to the recipe list and saves it to the file
+    * 
+    * @param recipe new recipe
+    * @throws java.lang.Exception 
+    * 
+    * @see dao.DerbyRecipeDAO#saveToFile() 
+    * 
+    */
     @Override
     public void create(Recipe recipe) throws Exception {
         recipe.setUniqueID(generateId());
@@ -50,20 +69,29 @@ public class DerbyRecipeDAO implements RecipeDAO {
         this.allRecipes.add(recipe);
         saveToFile();
     }
-
+    
     @Override
     public Recipe searchByKey(Integer id) {
         //delete maybe? no tests
         //searchByRecipe
         return this.recipes.stream().filter(r -> r.getUniqueID() == id).findFirst().orElse(null);
     }
-
+    
     @Override
     public boolean update(Recipe recipe) throws Exception {
         //not done no tests
+        //propably calls delete(id) and create(recipe)
         return false;
     }
-
+    /**
+    * Deletes a recipe
+    * 
+    * @param id id of the recipe being deleted
+    * @throws java.lang.Exception 
+    * 
+    * @see dao.DerbyRecipeDAO#saveToFile() 
+    * 
+    */
     @Override
     public void delete(Integer id) throws Exception {
         //not used yet, so no tests
@@ -71,7 +99,15 @@ public class DerbyRecipeDAO implements RecipeDAO {
         this.recipes.remove(recipe);
         saveToFile();
     }
-    
+    /**
+    * Deletes given user's recipes
+    * 
+    * @param user user whose recipes are going to be deleted
+    * @throws java.lang.Exception 
+    * 
+    * @see dao.DerbyRecipeDAO#saveToFile() 
+    * 
+    */
     @Override
     public void delete(User user) throws Exception {
         List<Recipe> usersRecipes = listUsersAll(user);
@@ -83,20 +119,36 @@ public class DerbyRecipeDAO implements RecipeDAO {
         });
         saveToFile();
     }
-
+    /**
+    * Lists all recipes own by given user
+    * 
+    * @param user Whose recipes we want to list
+    * 
+    * @return list of the recipes
+    * 
+    */
     @Override
     public List<Recipe> listUsersAll(User user) {
         List<Recipe> usersRecipes = new ArrayList<>();
         usersRecipes = recipes.stream().filter(r -> r.getUser().getUsername().equals(user.getUsername())).collect(Collectors.toList());
-        if (usersRecipes.isEmpty()) {
-            return null;
-        }
+        
         return usersRecipes;
     }
+    /**
+    * Generates id
+    * 
+    * @return id = size of the list containing all (also the deleted) recipes
+    * 
+    */
     private int generateId() {
         return this.allRecipes.size();
     }
-
+    /**
+    * Writes changes to the file
+    * 
+    * @throws java.lang.Exception 
+    * 
+    */
     public void saveToFile() throws Exception {
         try (FileWriter writer = new FileWriter(new File(recipeFile))) {
             for (Recipe r : recipes) {

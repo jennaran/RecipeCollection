@@ -29,6 +29,13 @@ public class Service {
     * @param   listIngredients   list of ingredients given by the user
     * @param   instructionWrong   instructions given by the user
     * 
+    * @see domain.Recipe#Recipe(java.lang.String, domain.User) 
+    * @see domain.Service#ingredientsStringAddingLine(java.util.List) 
+    * @see domain.Service#instructionsStringAddingLine(java.lang.String) 
+    * @see domain.Recipe#setIngredients(java.lang.String) 
+    * @see domain.Recipe#setInstruction(java.lang.String) 
+    * @see dao.RecipeDAO#create(domain.Recipe) 
+    * 
     * @return true - if creating a recipe works
     */
     public boolean createNewRecipe(String name, List<String> listIngredients, String instructionWrong) {
@@ -78,6 +85,8 @@ public class Service {
     *
     * @param   name   recipe's name given by the user 
     * 
+    * @see dao.RecipeDAO#listUsersAll(domain.User) 
+    * 
     * @return The recipe with the given name
     */
     public Recipe findUsersRecipeByName(String name) {
@@ -90,6 +99,9 @@ public class Service {
     * of the given user's recipe
     *
     * @param   name   recipe's name given by the user
+    * 
+    * @see domain.Service#findUsersRecipeByName(java.lang.String) 
+    * @see domain.Recipe#getIngredientsList() 
     * 
     * @return List of the ingredients
     */
@@ -107,6 +119,9 @@ public class Service {
     *
     * @param   name   recipe's name given by the user
     * 
+    * @see domain.Service#findUsersRecipeByName(java.lang.String) 
+    * @see domain.Recipe#getInstruction() 
+    * 
     * @return Instructions as String without "_"
     */
     public String getRecipeInstructionsByRecipeName(String name) {
@@ -123,6 +138,9 @@ public class Service {
     *
     * @param   username   username of the new user
     * @param   password   password of the new user
+    * 
+    * @see dao.UserDAO#searchByUsername(java.lang.String)
+    * @see dao.UserDAO#create(domain.User) 
     * 
     * @return true - if creating a user works
     */
@@ -145,6 +163,9 @@ public class Service {
     * @param   username   user's username
     * @param   password   user's password
     * 
+    * @see dao.UserDAO#searchByUsername(java.lang.String) 
+    * @see domain.User#getPassword() 
+    * 
     * @return true - if login works (=user exists)
     */
     public boolean logIn(String username, String password) {
@@ -157,17 +178,27 @@ public class Service {
         } 
         return false;
     }
-    
+     /**
+    * This method returns logged in user
+    * 
+    * @return User that is currently logged in
+    */
     public User getLoggenInUser() {
         return loggenInUser;
     }
-     
+     /**
+    * This method is for loging out
+    */
     public void logOut() {
         this.loggenInUser = null;
     }
     /**
     * This method is for deleting the loggedIn user and all their recipes
     *
+    * @see dao.DerbyUserDAO#delete(domain.User) 
+    * @see dao.DerbyRecipeDAO#delete(domain.User) 
+    * @see domain.Service#logOut() 
+    * 
     * @return true - if deleting user and recipes works
     */
     public boolean deleteAccount() {
@@ -183,6 +214,8 @@ public class Service {
     /**
     * This method is for listing the names of the loggedInUser's recipes
     *
+    * @see dao.DerbyRecipeDAO#listUsersAll(domain.User) 
+    * 
     * @return List of the recipe names
     */
     public List<String> userRecipeNames() {

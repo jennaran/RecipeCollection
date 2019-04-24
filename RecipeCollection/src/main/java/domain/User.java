@@ -2,24 +2,43 @@
 package domain;
 
 import java.util.Objects;
-
+/**
+ * This is a class for users
+ */
 public class User {
     private String username;
     private String password;
-
+    /**
+     * Sets constructors
+     * 
+     * @param username user's username
+     * @param password user's password
+     */
     public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
-
+    /**
+    * Returns user's password
+    * 
+    * @return User's password
+    */
     public String getPassword() {
         return password;
     }
-    
+    /**
+    * Returns user's username
+    * 
+    * @return User's username
+    */
     public String getUsername() {
         return username;
     }    
-
+    /**
+    * Generates hashCode for users
+    * 
+    * @return Generated hashCode
+    */
     @Override
     public int hashCode() {
         int hash = 3;
@@ -27,7 +46,11 @@ public class User {
         hash = 53 * hash + Objects.hashCode(this.password);
         return hash;
     }
-
+    /**
+    * Method for comparing user's
+    * 
+    * @return True - if user equals given object. False - if not.
+    */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -49,9 +72,4 @@ public class User {
         return true;
     }
 
-    
-
-    
-
-    
 }

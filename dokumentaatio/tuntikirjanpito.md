@@ -17,4 +17,5 @@
 | 19.4 | 2 | Paikansin ja korjasin vian, joka esti uusia käyttäjiä kirjautumasta sisään |
 | 20.4. | 4 | Asettelujen korjailu esim. reseptin luonti -näkymässä. |
 | 22.4. | 2 | Muutaman back-napin asennus ja perehtyminen TextFieldin ja TextArean rajoittamiseen ja niiden toteuttaminen |
-| *Yhteensä* | 53 |  |
+| 24.4. | 8 | Servicen loput testit, javaDoc aloitettu ja käyttöohjeiden teko |
+| *Yhteensä* | 61 |  |

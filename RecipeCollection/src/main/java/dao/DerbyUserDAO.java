@@ -3,15 +3,24 @@ package dao;
 
 import domain.User;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * Provides methods for managing user.txt (the file where users are saved)
+ */
 public class DerbyUserDAO implements UserDAO {
     private List<User> users;
     private String userFile;
-    
+    /**
+    * Sets constructors
+    * 
+    *@param file user.txt 
+    * @throws java.lang.Exception 
+    * 
+    */
     public DerbyUserDAO(String file) throws Exception {
         users = new ArrayList<>();
         this.userFile = file;
@@ -23,7 +32,7 @@ public class DerbyUserDAO implements UserDAO {
                 User user = new User(parts[0], parts[1]);
                 users.add(user);
             }
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             FileWriter writer = new FileWriter(new File(file));
             writer.close();
         }
