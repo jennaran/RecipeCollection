@@ -52,7 +52,6 @@ open target/site/checkstyle.html
 
 ```
 mvn package 
-
 ```
 
 ##### Jarin suorittaminen
