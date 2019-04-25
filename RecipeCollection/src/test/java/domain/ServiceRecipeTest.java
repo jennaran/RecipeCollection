@@ -66,7 +66,6 @@ public class ServiceRecipeTest {
         assertEquals(recipe1.getIngredientsString(), newRecipe.getIngredientsString());
         assertEquals(recipe1.getInstruction(), newRecipe.getInstruction());
         assertEquals(recipe1.getName(), newRecipe.getName());
-        assertTrue(recipe1.getUniqueID() == newRecipe.getUniqueID());
     }
     
     @Test

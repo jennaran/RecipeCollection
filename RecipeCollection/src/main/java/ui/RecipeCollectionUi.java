@@ -65,6 +65,7 @@ public class RecipeCollectionUi extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.stage = primaryStage;
+        stage.setResizable(false);
         Scene scene = beginningScene();
         
         stage.setTitle("RecipeCollection");
@@ -178,6 +179,14 @@ public class RecipeCollectionUi extends Application {
         
         border.setPadding(new Insets(10, 10, 10, 10));
         
+        edit.setOnAction(a -> {
+            try {
+                this.stage.setScene(newRecipeScene(recipeName));
+            } catch (Exception ex) {
+                Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
         back.setOnAction(e -> {
             this.stage.setScene(this.loggedInScene);
         });
@@ -186,13 +195,21 @@ public class RecipeCollectionUi extends Application {
         return newRecipeScene;
     }
     
-    public Scene newRecipeScene() throws Exception {
+    public Scene newRecipeScene(String nameOrNull) throws Exception {
         this.addedIngredients = new ArrayList();
+        if (nameOrNull != null) {
+            List<String> moi = service.getRecipeIngredienstByRecipeName(nameOrNull);
+            moi.stream().forEach(i -> addedIngredients.add(i));
+        }
         
         TextField recipeNameField = new TextField();
         recipeNameField.setPrefHeight(40);
         recipeNameField.setPromptText("Name of the recipe");
         recipeNameField.setPrefWidth(261);
+        
+        if (nameOrNull != null) {
+            recipeNameField.setText(nameOrNull);
+        }
         
         Text text = new Text("Ingredients");
         text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -255,6 +272,10 @@ public class RecipeCollectionUi extends Application {
         addInstructions.setPromptText("Add instructions here\r1.\r2.\r3.");
         addInstructions.setPrefSize(sceneL / 2 -20, sceneK - 90);
         
+        if (nameOrNull != null) {
+            addInstructions.setText(service.getRecipeInstructionsByRecipeName(nameOrNull));
+        }
+        
         VBox vbox2 = new VBox();
         vbox2.setPrefWidth(sceneL / 2);
         //vbox2.setPadding(new Insets(10, 10, 10, 0));
@@ -281,18 +302,39 @@ public class RecipeCollectionUi extends Application {
             String instuctions = addInstructions.getText();
             String recipeName = recipeNameField.getText();
             if (!instuctions.isEmpty() && !recipeName.isEmpty() && !addedIngredients.isEmpty()) {
-                if (this.service.createNewRecipe(recipeName, addedIngredients, instuctions)) {
-                    //reseptin luominen onnistuu
-                    addInstructions.clear();
-                    recipeNameField.clear();
-                    this.addedIngredients.clear();
+                if (nameOrNull != null) {
                     try {
-                        list(this.addedIngredients, 2);
-                        this.loggedInScene = loggedInScene();
+                        // update
+                        if (this.service.update(nameOrNull, recipeName, addedIngredients, instuctions)) {
+                            addInstructions.clear();
+                            recipeNameField.clear();
+                            this.addedIngredients.clear();
+                            try {
+                                list(this.addedIngredients, 2);
+                                this.loggedInScene = loggedInScene();
+                            } catch (Exception ex) {
+                                Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            stage.setScene(this.loggedInScene);
+                        }
+                        System.out.println("ei onnistu");
                     } catch (Exception ex) {
                         Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    stage.setScene(this.loggedInScene);
+                } else {
+                    if (this.service.createNewRecipe(recipeName, addedIngredients, instuctions)) {
+                        //reseptin luominen onnistuu
+                        addInstructions.clear();
+                        recipeNameField.clear();
+                        this.addedIngredients.clear();
+                        try {
+                            list(this.addedIngredients, 2);
+                            this.loggedInScene = loggedInScene();
+                        } catch (Exception ex) {
+                            Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        stage.setScene(this.loggedInScene);
+                    }
                 }
             }
         });
@@ -347,7 +389,7 @@ public class RecipeCollectionUi extends Application {
         } else if (nro == 0) {
             button.setOnMouseClicked(e -> {
                 try {
-                    stage.setScene(newRecipeScene());
+                    stage.setScene(newRecipeScene(null));
                 } catch (Exception ex) {
                     Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -432,7 +474,7 @@ public class RecipeCollectionUi extends Application {
                 
                 try {
                     if (service.createNewUser(un, pw)) {
-                        stage.setScene(this.beginningScene);
+                        stage.setScene(beginningScene());
                     } else {
                         Text failedLogin = new Text("This username is already in use");
                         grid.add(failedLogin, 1, 5);
@@ -472,13 +514,13 @@ public class RecipeCollectionUi extends Application {
         
         sighOut.setOnAction(e -> {
             service.logOut();
-            stage.setScene(this.beginningScene);
+            stage.setScene(beginningScene());
         });
         
         delete.setOnAction(e -> {
             try {
                 if (service.deleteAccount()) {
-                stage.setScene(this.beginningScene);
+                stage.setScene(beginningScene());
                 }
             } catch (Exception ex) {
                 System.out.println(ex);

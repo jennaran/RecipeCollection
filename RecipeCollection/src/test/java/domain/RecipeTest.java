@@ -29,7 +29,7 @@ public class RecipeTest {
     public void setUp() {
         user = new User("username", "password");
         noId = new Recipe("pie", user);
-        recipe = new Recipe(1, "cheesecake", user);
+        recipe = new Recipe("cheesecake", user);
     }
     
     @After
@@ -38,18 +38,12 @@ public class RecipeTest {
     
     @Test
     public void constructorsWork() {
-        assertTrue(1 == recipe.getUniqueID());
         Assert.assertTrue(recipe.getUser().equals(user) && user.equals(recipe.getUser()));
         Assert.assertTrue(noId.getUser().equals(user) && user.equals(noId.getUser()));
         assertEquals("cheesecake", recipe.getName());
         assertEquals("pie", noId.getName());
     }
     
-    @Test
-    public void setIdWorks() {
-        noId.setUniqueID(2);
-        assertTrue(2 == noId.getUniqueID());
-    }
     
     @Test
     public void settingAndGettingIngredientsWorks() {

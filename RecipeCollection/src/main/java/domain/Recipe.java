@@ -7,28 +7,13 @@ import java.util.List;
  * This is a class for recipes
  */
 public class Recipe {
-    private Integer uniqueID;
     private final String name;
     private List<String> ingredients;
     private List<String> instructions;
     private final User user;
     
     /**
-    * Sets constructors when unique id is known
-    * (when recipe is updated)
-    *
-    * @param uniqueID recipe's id given by someone
-    * @param name recipe's name
-    * @param user who owns the recipe
-    * 
-    */
-    public Recipe(Integer uniqueID, String name, User user) {
-        this.uniqueID = uniqueID;
-        this.name = name;
-        this.user = user;
-    }
-    /**
-    * Sets constructors when recipe is created for the first time
+    * Sets constructors
     *
     * @param name recipe's name
     * @param user who owns the recipe
@@ -37,22 +22,6 @@ public class Recipe {
     public Recipe(String name, User user) {
         this.name = name;
         this.user = user;
-    }
-    /**
-    * Sets uniqueID for recipe
-    * 
-    * @param uniqueID a number that is generated in RecipeDAO
-    */
-    public void setUniqueID(Integer uniqueID) {
-        this.uniqueID = uniqueID;
-    }
-    /**
-    * Returns unique id
-    * 
-    * @return id
-    */   
-    public Integer getUniqueID() {
-        return uniqueID;
     }
     /**
     * Returns recipe's name
@@ -80,8 +49,8 @@ public class Recipe {
     public String getIngredientsString() {
         String result = "";
         result = ingredients.stream().map((ingredient) -> ingredient + "_").reduce(result, String::concat);
-	return result.substring(0, result.length() - 1);
-	}
+        return result.substring(0, result.length() - 1);
+    }
     /**
     * Returns ingredients as a list
     * 
@@ -89,15 +58,14 @@ public class Recipe {
     */ 
     public List<String> getIngredientsList() {
         return this.ingredients;
-	}
+    }
     /**
     * Sets ingredients to a list
     * 
     * @param ingredients Ingredients given as a String where they are separated with _
     */ 
     public void setIngredients(String ingredients) {
-	this.ingredients = Arrays.asList(ingredients.split("_"));
-        
+        this.ingredients = Arrays.asList(ingredients.split("_"));
     }
     /**
     * This method modifies the list of instructions into String form by adding _
@@ -107,9 +75,9 @@ public class Recipe {
     * @return name
     */ 
     public String getInstruction() {
-    String result = "";
-    result = instructions.stream().map((instruction) -> instruction + "_").reduce(result, String::concat);
-	return result.substring(0, result.length() - 1);
+        String result = "";
+        result = instructions.stream().map((instruction) -> instruction + "_").reduce(result, String::concat);
+        return result.substring(0, result.length() - 1);
     }
     /**
     * Sets instructions to a list
@@ -117,6 +85,6 @@ public class Recipe {
     * @param instruction instructions given as a String where they are separated with _
     */ 
     public void setInstruction(String instruction) {
-	this.instructions = Arrays.asList(instruction.split("_"));
+        this.instructions = Arrays.asList(instruction.split("_"));
     }
 }

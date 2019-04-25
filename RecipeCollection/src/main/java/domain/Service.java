@@ -56,6 +56,32 @@ public class Service {
         }
         return true;
     } 
+    
+    public boolean update(String oldName, String newName, List<String> listIngredients, String instructionWrong) throws Exception {
+        System.out.println("updatessa");
+        String recipeWithName = userRecipeNames().stream().filter(n -> n.equals(newName)).findFirst().orElse(null);
+        System.out.println("recipe name:" + recipeWithName);
+        if (recipeWithName == null || recipeWithName.equals(oldName)) {
+            this.recipeDAO.delete(oldName, this.loggenInUser);
+            System.out.println("delete id " + oldName);
+            Recipe recipe = new Recipe(newName, loggenInUser);
+            String ingredients = ingredientsStringAddingLine(listIngredients);
+            String instruction = instructionsStringAddingLine(instructionWrong);
+
+            recipe.setIngredients(ingredients);
+            recipe.setInstruction(instruction);
+            System.out.println("uusi resepti");
+            try {
+                recipeDAO.create(recipe);
+                System.out.println("uusi resepti tallennettu");
+            } catch (Exception e) {
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    } 
     /**
     * Modifies given list to a form where it can be saved to the recipe class
     *
@@ -66,7 +92,7 @@ public class Service {
     public String ingredientsStringAddingLine(List<String> listIngredients) {
         String ingredients = "";
         ingredients = listIngredients.stream().map((ingredient) -> ingredient + "_").reduce(ingredients, String::concat);
-	return ingredients.substring(0, ingredients.length() - 1);
+        return ingredients.substring(0, ingredients.length() - 1);
     }
     /**
     * Modifies given String to a form where it can be saved to the recipe class
@@ -129,9 +155,9 @@ public class Service {
         if (recipe == null) {
             return null;
         }
-        String Instructions = recipe.getInstruction();
-        Instructions = Instructions.replace("_", "\n");
-        return Instructions;
+        String instructions = recipe.getInstruction();
+        instructions = instructions.replace("_", "\n");
+        return instructions;
     }
     /**
     * This method is for creating a new user with a unique username

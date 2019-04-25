@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
  */
 public class DerbyRecipeDAO implements RecipeDAO {
     private List<Recipe> recipes;
-    private List<Recipe> allRecipes;
     private final String recipeFile;
     
     /**
@@ -30,21 +29,18 @@ public class DerbyRecipeDAO implements RecipeDAO {
     public DerbyRecipeDAO(UserDAO users, String recipeFile) throws Exception {
         this.recipeFile = recipeFile;
         this.recipes = new ArrayList();
-        this.allRecipes = new ArrayList();
         
         try {
             Scanner reader = new Scanner(new File(recipeFile));
             while (reader.hasNextLine()) {
                 String[] parts = reader.nextLine().split(";");
-                int id = Integer.valueOf(parts[0]);
-                User user = users.listAll().stream().filter(u -> u.getUsername().equals(parts[4])).findFirst().orElse(null);
+                User user = users.listAll().stream().filter(u -> u.getUsername().equals(parts[3])).findFirst().orElse(null);
                 
-                Recipe recipe = new Recipe(id, parts[1], user);
-                recipe.setIngredients(parts[2]);
-                recipe.setInstruction(parts[3]);
+                Recipe recipe = new Recipe(parts[0], user);
+                recipe.setIngredients(parts[1]);
+                recipe.setInstruction(parts[2]);
                 
                 recipes.add(recipe);
-                allRecipes.add(recipe);
             }
             
         } catch (FileNotFoundException | NumberFormatException e) {
@@ -64,17 +60,8 @@ public class DerbyRecipeDAO implements RecipeDAO {
     */
     @Override
     public void create(Recipe recipe) throws Exception {
-        recipe.setUniqueID(generateId());
         this.recipes.add(recipe);
-        this.allRecipes.add(recipe);
         saveToFile();
-    }
-    
-    @Override
-    public Recipe searchByKey(Integer id) {
-        //delete maybe? no tests
-        //searchByRecipe
-        return this.recipes.stream().filter(r -> r.getUniqueID() == id).findFirst().orElse(null);
     }
     
     @Override
@@ -86,16 +73,18 @@ public class DerbyRecipeDAO implements RecipeDAO {
     /**
     * Deletes a recipe
     * 
-    * @param id id of the recipe being deleted
+     * @param name name of the recipe being deleted
+     * @param user name of the user who owns the recipe
     * @throws java.lang.Exception 
     * 
+    * @see dao.DerbyRecipeDAO#listUsersAll(domain.User) 
     * @see dao.DerbyRecipeDAO#saveToFile() 
     * 
     */
     @Override
-    public void delete(Integer id) throws Exception {
-        //not used yet, so no tests
-        Recipe recipe = recipes.stream().filter(r -> Objects.equals(r.getUniqueID(), id)).findFirst().orElse(null);
+    public void delete(String name, User user) throws Exception {
+        List<Recipe> usersRecipes = listUsersAll(user);
+        Recipe recipe = usersRecipes.stream().filter(r -> r.getName().equals(name)).findFirst().orElse(null);
         this.recipes.remove(recipe);
         saveToFile();
     }
@@ -135,15 +124,6 @@ public class DerbyRecipeDAO implements RecipeDAO {
         return usersRecipes;
     }
     /**
-    * Generates id
-    * 
-    * @return id = size of the list containing all (also the deleted) recipes
-    * 
-    */
-    private int generateId() {
-        return this.allRecipes.size();
-    }
-    /**
     * Writes changes to the file
     * 
     * @throws java.lang.Exception 
@@ -152,7 +132,7 @@ public class DerbyRecipeDAO implements RecipeDAO {
     public void saveToFile() throws Exception {
         try (FileWriter writer = new FileWriter(new File(recipeFile))) {
             for (Recipe r : recipes) {
-                writer.write(r.getUniqueID() + ";" + r.getName() + ";" + r.getIngredientsString() + ";" + r.getInstruction() + ";" + r.getUser().getUsername() + "\n");
+                writer.write(r.getName() + ";" + r.getIngredientsString() + ";" + r.getInstruction() + ";" + r.getUser().getUsername() + "\n");
             }
         } catch (Exception e) {
             System.out.println("voi ei :(");
