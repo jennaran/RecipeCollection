@@ -317,7 +317,6 @@ public class RecipeCollectionUi extends Application {
                             }
                             stage.setScene(this.loggedInScene);
                         }
-                        System.out.println("ei onnistu");
                     } catch (Exception ex) {
                         Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
                     }

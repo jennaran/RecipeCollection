@@ -56,24 +56,37 @@ public class Service {
         }
         return true;
     } 
-    
+    /**
+    * This method is for updating a  recipe from the user who is logged in
+    *
+    * @param oldName recipe's old name
+    * @param newName recipe's new name
+    * @param   listIngredients   list of ingredients given by the user
+    * @param   instructionWrong   instructions given by the user
+    * @throws java.lang.Exception
+    * 
+    * @see domain.Recipe#Recipe(java.lang.String, domain.User) 
+    * @see domain.Service#ingredientsStringAddingLine(java.util.List) 
+    * @see domain.Service#instructionsStringAddingLine(java.lang.String) 
+    * @see domain.Recipe#setIngredients(java.lang.String) 
+    * @see domain.Recipe#setInstruction(java.lang.String) 
+    * @see dao.RecipeDAO#create(domain.Recipe) 
+    * @see dao.DerbyRecipeDAO#delete(java.lang.String, domain.User) 
+    * 
+    * @return true - if creating a recipe works
+    */
     public boolean update(String oldName, String newName, List<String> listIngredients, String instructionWrong) throws Exception {
-        System.out.println("updatessa");
         String recipeWithName = userRecipeNames().stream().filter(n -> n.equals(newName)).findFirst().orElse(null);
-        System.out.println("recipe name:" + recipeWithName);
         if (recipeWithName == null || recipeWithName.equals(oldName)) {
             this.recipeDAO.delete(oldName, this.loggenInUser);
-            System.out.println("delete id " + oldName);
             Recipe recipe = new Recipe(newName, loggenInUser);
             String ingredients = ingredientsStringAddingLine(listIngredients);
             String instruction = instructionsStringAddingLine(instructionWrong);
 
             recipe.setIngredients(ingredients);
             recipe.setInstruction(instruction);
-            System.out.println("uusi resepti");
             try {
                 recipeDAO.create(recipe);
-                System.out.println("uusi resepti tallennettu");
             } catch (Exception e) {
                 return false;
             }
