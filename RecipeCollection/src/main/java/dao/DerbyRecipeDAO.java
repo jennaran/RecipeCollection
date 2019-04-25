@@ -57,7 +57,7 @@ public class DerbyRecipeDAO implements RecipeDAO {
     * Adds new recipe to the recipe list and saves it to the file
     * 
     * @param recipe new recipe
-    * @throws java.lang.Exception 
+     * @throws java.lang.Exception
     * 
     * @see dao.DerbyRecipeDAO#saveToFile() 
     * 
