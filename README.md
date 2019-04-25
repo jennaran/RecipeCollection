@@ -61,7 +61,7 @@ Target hakemistosta löytyy jar-tiedosto RecipeCollection-1.0-SNAPSHOT.jar
 Sen voi suorittaa käskyllä:
 
 ```
-java -jar RecipeCollection-1.0-SNAPSHOT.jar
+java -jar target/RecipeCollection-1.0-SNAPSHOT.jar
 ```
 
 ### JavaDocin generointi
