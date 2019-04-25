@@ -18,4 +18,5 @@
 | 20.4. | 4 | Asettelujen korjailu esim. reseptin luonti -näkymässä. |
 | 22.4. | 2 | Muutaman back-napin asennus ja perehtyminen TextFieldin ja TextArean rajoittamiseen ja niiden toteuttaminen |
 | 24.4. | 8 | Servicen loput testit, javaDoc aloitettu ja käyttöohjeiden teko |
-| *Yhteensä* | 61 |  |
+| 25.4. | 4 | Lisäsin reseptien muokkaus ominaisuuden ja poistin indeksit resepteistä |
+| *Yhteensä* | 65 |  |
