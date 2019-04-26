@@ -65,32 +65,19 @@ public class Service {
     * @param   instructionWrong   instructions given by the user
     * @throws java.lang.Exception
     * 
-    * @see domain.Recipe#Recipe(java.lang.String, domain.User) 
-    * @see domain.Service#ingredientsStringAddingLine(java.util.List) 
-    * @see domain.Service#instructionsStringAddingLine(java.lang.String) 
-    * @see domain.Recipe#setIngredients(java.lang.String) 
-    * @see domain.Recipe#setInstruction(java.lang.String) 
-    * @see dao.RecipeDAO#create(domain.Recipe) 
-    * @see dao.DerbyRecipeDAO#delete(java.lang.String, domain.User) 
+    * @see domain.Service#userRecipeNames() 
+    * @see dao.RecipeDAO#delete(java.lang.String, domain.User) 
+    * @see domain.Service#createNewRecipe(java.lang.String, java.util.List, java.lang.String) 
     * 
-    * @return true - if creating a recipe works
+    * @return true - if updating a recipe works
     */
     public boolean update(String oldName, String newName, List<String> listIngredients, String instructionWrong) throws Exception {
         String recipeWithName = userRecipeNames().stream().filter(n -> n.equals(newName)).findFirst().orElse(null);
         if (recipeWithName == null || recipeWithName.equals(oldName)) {
             this.recipeDAO.delete(oldName, this.loggenInUser);
-            Recipe recipe = new Recipe(newName, loggenInUser);
-            String ingredients = ingredientsStringAddingLine(listIngredients);
-            String instruction = instructionsStringAddingLine(instructionWrong);
-
-            recipe.setIngredients(ingredients);
-            recipe.setInstruction(instruction);
-            try {
-                recipeDAO.create(recipe);
-            } catch (Exception e) {
-                return false;
-            }
-            return true;
+            
+            return createNewRecipe(newName, listIngredients, instructionWrong);
+            
         } else {
             return false;
         }
@@ -171,6 +158,10 @@ public class Service {
         String instructions = recipe.getInstruction();
         instructions = instructions.replace("_", "\n");
         return instructions;
+    }
+    
+    public void deleteRecipe(String name) throws Exception {
+        this.recipeDAO.delete(name, loggenInUser);
     }
     /**
     * This method is for creating a new user with a unique username

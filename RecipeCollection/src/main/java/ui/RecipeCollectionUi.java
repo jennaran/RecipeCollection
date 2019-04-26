@@ -123,6 +123,8 @@ public class RecipeCollectionUi extends Application {
         
         search.setOnAction(a -> {
             String name = searchBy.getText();
+            //name = name.trim();
+            //name = name.toLowerCase();
             try {
                 if (name.isEmpty()) {
                     borderList.setCenter(list(empty, 0));
@@ -162,15 +164,17 @@ public class RecipeCollectionUi extends Application {
         borderDown.setRight(instructions(recipeName));
         borderDown.setLeft(ingredients(recipeName));
         
-        Button back = new Button("Back");
-        Button edit = new Button("Edit");
+        Button backButton = new Button("Back");
+        Button editButton = new Button("Edit");
+        Button deleteButton = new Button("Delete");
         Text name = new Text(recipeName);
         name.setFont(Font.font("Tahoma", FontWeight.NORMAL, 28));
         
         HBox hb = new HBox();
         hb.getChildren().add(name);
-        hb.getChildren().add(edit);
-        hb.getChildren().add(back);
+        hb.getChildren().add(editButton);
+        hb.getChildren().add(deleteButton);
+        hb.getChildren().add(backButton);
         hb.setSpacing(10);
         
         BorderPane border = new BorderPane();
@@ -179,7 +183,7 @@ public class RecipeCollectionUi extends Application {
         
         border.setPadding(new Insets(10, 10, 10, 10));
         
-        edit.setOnAction(a -> {
+        editButton.setOnAction(a -> {
             try {
                 this.stage.setScene(newRecipeScene(recipeName));
             } catch (Exception ex) {
@@ -187,8 +191,18 @@ public class RecipeCollectionUi extends Application {
             }
         });
         
-        back.setOnAction(e -> {
+        backButton.setOnAction(e -> {
             this.stage.setScene(this.loggedInScene);
+        });
+        
+        deleteButton.setOnAction(e -> {
+            try {
+                this.service.deleteRecipe(recipeName);
+                this.stage.setScene(loggedInScene());
+            } catch (Exception ex) {
+                Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         });
         
         this.newRecipeScene = new Scene(border, sceneL, sceneK);
