@@ -1,4 +1,4 @@
-#Työaikakirjanpito
+# Työaikakirjanpito
 
 | *päivä* | *aika* | *mitä tein* |
 | --- | --- | --- |
@@ -19,5 +19,7 @@
 | 22.4. | 2 | Muutaman back-napin asennus ja perehtyminen TextFieldin ja TextArean rajoittamiseen ja niiden toteuttaminen |
 | 24.4. | 8 | Servicen loput testit, javaDoc aloitettu ja käyttöohjeiden teko |
 | 25.4. | 4 | Lisäsin reseptien muokkaus ominaisuuden ja poistin indeksit resepteistä |
-| 26.4. | 1 | Reseptien poisto-ominaisuus lisätty |
-| *Yhteensä* | 65 |  |
+| 26.4. | 0.5 | Reseptien poisto-ominaisuus lisätty |
+| 27.4. | 2 | Testejen kirjoittekua |
+| 28.4. | 3 | Loput testit ja dokumentaation päivittämistä |
+| *Yhteensä* | 65.5 |  |
