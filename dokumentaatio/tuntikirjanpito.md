@@ -22,4 +22,4 @@
 | 26.4. | 0.5 | Reseptien poisto-ominaisuus lisätty |
 | 27.4. | 2 | Testejen kirjoittekua |
 | 28.4. | 3 | Loput testit ja dokumentaation päivittämistä |
-| *Yhteensä* | 65.5 |  |
+| *Yhteensä* | 68.5 |  |
