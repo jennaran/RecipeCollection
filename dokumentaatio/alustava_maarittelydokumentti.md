@@ -10,6 +10,8 @@ mutta sovelluksen sisältö on käyttäjäkohtainen.
 
 Koska sisältö on yksityistä on sovelluksessa vain normaali käyttäjätila.
 
+<img src = "https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_vaatimusmaare_kuva1.png">
+
 ## Toiminnallisuudet
 
 Aloitussivu
