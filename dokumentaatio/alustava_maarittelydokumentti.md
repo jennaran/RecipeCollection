@@ -14,35 +14,33 @@ Koska sisältö on yksityistä on sovelluksessa vain normaali käyttäjätila.
 
 Aloitussivu
 
-- Voi luoda tunnuksen
+- Nappi tunnuksen luomisnäkymään
 - Voi kirjautua sisään
+  - Täytä käyttäjätunnus ja salasana
+  - Kirjaudu sisään painamalla nappia
+  - Jos salasana tai käyttäjätunnus on väärin, saat virheviestin
 
-Tunnuksen luominen
+Tunnuksenluomisnäkymä
 
-- Täydennä uniikki email osoite, uniikki käyttäjänimi ja salasana
+- Täydennä uniikki uniikki käyttäjänimi ja salasana
 - Luo tili painamalla nappia
-- logoa klikkaamalla pääsee aloitussivulle
-
-Kirjautumisnäkymä
-
-- Täytä käyttäjätunnus ja salasana
-- Kirjaudu sisään painamalla nappia
-- Jos salasana tai käyttäjätunnus on väärin, saat virheviestin
-- logoa klikkaamalla pääsee aloitussivulle
+- back-nappulaa klikkaamalla pääsee aloitussivulle
 
 Sovellusnäkymä kirjauttumisen jälkeen
 
 - Vasemmalla näet jo kirjaamiesi reseptien otsikot
 - Otsikkoa klikkaamalla pääset reseptinäkymään
 - Reseptejä voi etsiä ylhäältä löytyvästä hakukentästä
-- Oikealla olevasta "luo uusi" -nappulasta voi pääsee reseptin luomis näkymään
-- Oikealla ylhäällä lukee käyttäjä nimi ja ulos kirjautumis vaihtoehto
+- Oikealla olevasta "Add A New Recipe" -nappulasta pääsee reseptinluomisnäkymään
+- Ylhäällä vasemmalla lukee käyttäjänimi, jota klikkaamalla aukeaa valikko:
+ - uloskirjautumiseen
+ - tilin poistamiseen
 
 Reseptinäkymä
 
 - Ylhäällä lukee reseptin otsikko, vasemmalla ainekset ja oikealla ohje
-- Otsikon vieressä on muokkaus nappi
-- Muokkaus näkymä on sama, mutta nyt löytyy myös tallennus nappi
+- Otsikon vieressä on edit-nappi, jolla reseptiä pääsee muokkaamaan ja delete-nappi, jolla kyseinen resepti voidaan poistaa
+- Muokkausnäkymä on sama kuin reseptin luomisnäkymä
 
 Reseptin luomisnäkymä
 
