@@ -10,11 +10,13 @@ Sovellusta voi käyttää usea käyttäjä, mutta sisältö on kaikille henkilö
 
 [Vaatimusmäärittely](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/alustava_maarittelydokumentti.md)
 
-[Tuntikirjanpito](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
-
 [Arkkitehtuuri](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
-[Release](https://github.com/jennaran/ot-harjoitustyo/releases)
+[Tuntikirjanpito](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
+
+## Releaset
+
+[Viikko 5](https://github.com/jennaran/ot-harjoitustyo/releases)
 
 ## Komentoriviltä suoritettavat toimenpiteet
 
@@ -30,7 +32,7 @@ mvn test
 mvn test jacoco:report
 ```
 
-##### Rapotti avataan antamalla juuressa käsky:
+#### Rapotti avataan antamalla juuressa käsky:
 
 ```
 open target/site/jacoco/index.html
@@ -42,7 +44,7 @@ open target/site/jacoco/index.html
 mvn jxr:jxr checkstyle:checkstyle
 ```
 
-##### Rapotti avataan antamalla juuressa käsky:
+#### Rapotti avataan antamalla juuressa käsky:
 
 ```
 open target/site/checkstyle.html
@@ -54,7 +56,7 @@ open target/site/checkstyle.html
 mvn package 
 ```
 
-##### Jarin suorittaminen
+#### Jarin suorittaminen
 
 Target hakemistosta löytyy jar-tiedosto RecipeCollection-1.0-SNAPSHOT.jar
 
@@ -70,7 +72,7 @@ java -jar target/RecipeCollection-1.0-SNAPSHOT.jar
 mvn javadoc:javadoc
 ```
 
-##### JavaDockin avaaminen
+#### JavaDockin avaaminen
 
 ```
 open target/site/apidocs/
