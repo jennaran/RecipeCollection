@@ -18,9 +18,8 @@ Käyttöliittymä sisältää viisi eri näkymää.
 - reseptin tarkastelu sivu
 - uuden reseptin luomis sivu
 
-Jokainen näkymä on toteutettu stage-oliona, joka luodaan kerran ohjelmaa suorittaessa 
-ja tallennetaan sitten luokan konstruktoriksi. 
-Näkymää vaihdetaan asettamalla uusi scene-olio stageen.
+Jokainen näkymä on toteutettu stage-oliona.
+Näkymää vaihdetaan asettamalla uusi scene-olio stageen, joka löytyy luokan kostruktorista.
 
 Käyttöliittymällä on myös konstruktori Service, jolle toimintojen suoritus on 
 ulkoistettu. Konstruktori luodaan käyttöliittymän alussa init() -metodissa.
@@ -49,9 +48,9 @@ Sovelluksessa niitä käytetään niiden rajapintojen kautta.
 
 ### Tiedostot
 
-Käyttäjien ja reseptien tiedot tallennetaan erillisiin tiedostoihin. 
-Ohjelman juuresta löytyy config.properties tiedosto, josta tiedostojen nimet löytyvät. 
+Käyttäjien ja reseptien tiedot tallennetaan erillisiin tiedostoihin.  
 Käyttäjät tallennetaan tiedostoon nimeltä user.txt ja reseptit tiedostoon recipe.txt.
+Tiedostot on määritelty RecipeCollectionUi:n metodissa init().
 
 #### Käyttäjien tallennusmuoto
 
@@ -61,11 +60,9 @@ Käyttäjänimi ja salasana on erotettu puolipisteellä. Jokainen käyttäjä ta
 
 ### Reseptien tallennusmuoto
 
-id;name;ingredient1_ingredient2;instruction1_instruction2;user's name
+name;ingredient1_ingredient2;instruction1_instruction2;user's name
 
-Reseptit tallennetaan eri riveille. Ensin tallennetaan automaattisesti luotu integer id, 
-sitten reseptin nimi, siihen tarvittavat raaka-aineet, ohjeet ja reseptin omistajan
- käyttäjänimi. Kaikki erotetaan toisistaan puolipisteillä. 
+Reseptit tallennetaan eri riveille. Ensin tallennetaan reseptin nimi, siihen tarvittavat raaka-aineet, ohjeet ja reseptin omistajan käyttäjänimi. Kaikki erotetaan toisistaan puolipisteillä. 
 Raaka-aineiden ja ohjeiden väliset alaviivat mahdollistavat niiden selkeämmän listauksen
  reseptintarkastelunäkymässä.
 
