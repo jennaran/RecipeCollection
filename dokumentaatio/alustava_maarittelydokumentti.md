@@ -22,7 +22,7 @@ Aloitussivu
   - Kirjaudu sisään painamalla nappia
   - Jos salasana tai käyttäjätunnus on väärin, saat virheviestin
 
-Tunnuksenluomisnäkymä
+Tunnuksen luomisnäkymä
 
 - Täydennä uniikki uniikki käyttäjänimi ja salasana
 - Luo tili painamalla nappia
@@ -33,7 +33,7 @@ Sovellusnäkymä kirjauttumisen jälkeen
 - Vasemmalla näet jo kirjaamiesi reseptien otsikot
 - Otsikkoa klikkaamalla pääset reseptinäkymään
 - Reseptejä voi etsiä ylhäältä löytyvästä hakukentästä
-- Oikealla olevasta "Add A New Recipe" -nappulasta pääsee reseptinluomisnäkymään
+- Oikealla olevasta "Add A New Recipe" -nappulasta pääsee reseptin luomisnäkymään
 - Ylhäällä vasemmalla lukee käyttäjänimi, jota klikkaamalla aukeaa valikko:
  - uloskirjautumiseen
  - tilin poistamiseen
@@ -47,3 +47,8 @@ Reseptinäkymä
 Reseptin luomisnäkymä
 
 - Samaan tyyliin kuin reseptinäkymän muokkaustila, mutta kaikki kohdat on tyhjiä
+
+## Jatkokehitys ideoita
+
+- Reseptejä voisi jakaa yleiseen käyttöön
+- Salasanan voisi päivittää
