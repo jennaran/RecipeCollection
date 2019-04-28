@@ -46,7 +46,7 @@ Ylhäällä käyttäjävalikkoa klikkaamalla voidaan kirjautua ulos tai poistaa 
 
 _Delete Account_ -nappi avaa varmistusviestin tilin poistamisesta. 
 
-<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_paanakyma_poisto.png"
+<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_paanakyma_poisto.png">
 
 _Delete_ -nappula poistaa tilin pysyvästi.
 
@@ -95,6 +95,6 @@ _Delete_ -nappula poistaa reseptin pysyvästi.
 
 _Edit_ -nappulasta päästään muokkaamaan reseptiä.
 
-<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_reseptinEditointi.png"
+<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_reseptinEditointi.png">
 
 Reseptin muokkaus näkymä toimii samalla tavalla kuin uuden reseptin luomisnäkymä.
