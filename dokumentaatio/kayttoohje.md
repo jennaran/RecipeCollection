@@ -44,6 +44,12 @@ Ylhäällä käyttäjävalikkoa klikkaamalla voidaan kirjautua ulos tai poistaa 
 
 <img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_paanakyma_kayttajavalikko.png">
 
+_Delete Account_ -nappi avaa varmistusviestin tilin poistamisesta. 
+
+<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_paanakyma_poisto.png"
+
+_Delete_ -nappula poistaa tilin pysyvästi.
+
 Uusi resepti voidaan luoda painamalla oikella olevaa _Add A New Recipe_ -nappulaa.
 
 Vasemmalla on listattu kaikki käyttäjän lisäämät reseptit. 
@@ -56,7 +62,7 @@ Reseptin nimeä painalla päästään tutkimaan reseptiä.
 
 ### Reseptinuomisnäkymä
 
-<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_uusiResepti.png">
+<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_uusiResepti2.png">
 
 #### Name:
 
@@ -81,7 +87,14 @@ _Save_ -napista resepti tallennetaan, jos mikään kenttä ei ole tyhjä ja nimi
 
 ### Reseptinäkymä
 
-<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_reseptinakyma.png">
+<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_reseptinakyma2.png">
 
 _Back_ -nappulasta pääsee takaisin päänäkymään.
 
+_Delete_ -nappula poistaa reseptin pysyvästi.
+
+_Edit_ -nappulasta päästään muokkaamaan reseptiä.
+
+<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_reseptinEditointi.png"
+
+Reseptin muokkaus näkymä toimii samalla tavalla kuin uuden reseptin luomisnäkymä.
