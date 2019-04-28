@@ -34,27 +34,57 @@ public class ServiceUserTest {
     @After
     public void tearDown() {
     }
-    
+    /**
+    * Tests loging in with existing user
+    *
+    * @throws java.lang.Exception
+    * 
+    * @see domain.Service#logIn(java.lang.String, java.lang.String) 
+    * @see domain.Service#getLoggenInUser() 
+    */
     @Test
     public void existingUserCanLogin() throws Exception {
         assertTrue(this.service.logIn("name1", "one"));
         assertEquals("name1", this.service.getLoggenInUser().getUsername());
         
     }
-    
+    /**
+    * Tests loging in with non-existing user
+    *
+    * @throws java.lang.Exception
+    * 
+    * @see domain.Service#logIn(java.lang.String, java.lang.String) 
+    * @see domain.Service#getLoggenInUser() 
+    */
     @Test
-    public void non_existingUserCanLogin() throws Exception {
+    public void non_existingUserCanNotLogin() throws Exception {
         assertFalse(this.service.logIn("test1", "test1"));
         assertEquals(null, this.service.getLoggenInUser());
     }
-    
+    /**
+    * Tests creating a new user with unique name works
+    *
+    * @throws java.lang.Exception
+    * 
+    * @see domain.Service#createNewUser(java.lang.String, java.lang.String)  
+    * @see domain.Service#logIn(java.lang.String, java.lang.String) 
+    * @see domain.Service#getLoggenInUser() 
+    */
     @Test
     public void createNewUserWhoCanLogin() throws Exception {
         assertTrue(this.service.createNewUser("test1", "test1"));
         assertTrue(this.service.logIn("test1", "test1"));
         assertEquals("test1", this.service.getLoggenInUser().getUsername());
     }
-    
+    /**
+    * Tests creating a new user with already existing name doesn't work
+    *
+    * @throws java.lang.Exception
+    * 
+    * @see domain.Service#createNewUser(java.lang.String, java.lang.String)  
+    * @see domain.Service#logIn(java.lang.String, java.lang.String) 
+    * @see domain.Service#getLoggenInUser() 
+    */
     @Test
     public void cantCreateUserWithAlreadyUsedUsername() throws Exception {
         assertFalse(this.service.createNewUser("name1", "tikka"));
@@ -62,13 +92,24 @@ public class ServiceUserTest {
         assertFalse(this.service.logIn("name1", "tikka"));
         assertEquals(null, this.service.getLoggenInUser());
     }
-    
+    /**
+    * Tests logging out
+    *
+    * @see domain.Service#logOut() 
+    * @see domain.Service#getLoggenInUser() 
+    */
     @Test 
     public void logOut() {
         this.service.logOut();
         assertEquals(null, this.service.getLoggenInUser());
     }
-    
+    /**
+    * Tests deleting an existing user
+    * 
+    * @see domain.Service#createNewUser(java.lang.String, java.lang.String)  
+    * @see domain.Service#logIn(java.lang.String, java.lang.String) 
+    * @see domain.Service#getLoggenInUser() 
+    */
     @Test
     public void deleteExistingUser() {
         this.service.logIn("name1", "one");

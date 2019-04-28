@@ -3,19 +3,15 @@ package domain;
     
 import dao.RecipeDAO;
 import dao.UserDAO;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 /**
  * This class provides methods for managing users and recipes
  */
 public class Service {
     
-    private UserDAO userDao;
-    private RecipeDAO recipeDAO;
+    private final UserDAO userDao;
+    private final RecipeDAO recipeDAO;
     private User loggenInUser;
 
     public Service(UserDAO userDao, RecipeDAO recipeDAO) {
@@ -159,7 +155,14 @@ public class Service {
         instructions = instructions.replace("_", "\n");
         return instructions;
     }
-    
+    /**
+    * This method is for deleting a recipe
+    *
+    * @param   name   recipe's name given by the user
+    * @throws java.lang.Exception
+    * 
+    * @see dao.RecipeDAO#delete(java.lang.String, domain.User) 
+    */
     public void deleteRecipe(String name) throws Exception {
         this.recipeDAO.delete(name, loggenInUser);
     }
@@ -250,10 +253,6 @@ public class Service {
     */
     public List<String> userRecipeNames() {
         List<Recipe> recipes = this.recipeDAO.listUsersAll(loggenInUser);
-        if (recipes == null) {
-            List<String> recipeNames = new ArrayList();
-            return recipeNames;
-        }
         
         List<String> recipeNames = recipes.stream().map(r -> r.getName()).collect(Collectors.toList());
         return recipeNames;

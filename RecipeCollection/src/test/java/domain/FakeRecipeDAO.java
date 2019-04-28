@@ -4,7 +4,6 @@ package domain;
 import dao.RecipeDAO;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class FakeRecipeDAO implements RecipeDAO{
@@ -13,11 +12,6 @@ public class FakeRecipeDAO implements RecipeDAO{
     @Override
     public void create(Recipe recipe) throws Exception {
         this.recipes.add(recipe);
-    }
-
-    @Override
-    public boolean update(Recipe object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

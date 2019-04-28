@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 /**
@@ -63,13 +62,6 @@ public class DerbyRecipeDAO implements RecipeDAO {
         this.recipes.add(recipe);
         saveToFile();
     }
-    
-    @Override
-    public boolean update(Recipe recipe) throws Exception {
-        //not done no tests
-        //propably calls delete(id) and create(recipe)
-        return false;
-    }
     /**
     * Deletes a recipe
     * 
@@ -100,7 +92,7 @@ public class DerbyRecipeDAO implements RecipeDAO {
     @Override
     public void delete(User user) throws Exception {
         List<Recipe> usersRecipes = listUsersAll(user);
-        if (usersRecipes == null) {
+        if (usersRecipes.isEmpty()) {
             return;
         }
         usersRecipes.forEach((recipe) -> {
@@ -118,10 +110,7 @@ public class DerbyRecipeDAO implements RecipeDAO {
     */
     @Override
     public List<Recipe> listUsersAll(User user) {
-        List<Recipe> usersRecipes = new ArrayList<>();
-        usersRecipes = recipes.stream().filter(r -> r.getUser().getUsername().equals(user.getUsername())).collect(Collectors.toList());
-        
-        return usersRecipes;
+        return recipes.stream().filter(r -> r.getUser().getUsername().equals(user.getUsername())).collect(Collectors.toList());
     }
     /**
     * Writes changes to the file

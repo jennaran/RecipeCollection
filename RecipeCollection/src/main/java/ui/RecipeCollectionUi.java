@@ -42,7 +42,7 @@ import javafx.stage.Stage;
 
 
 public class RecipeCollectionUi extends Application {
-    private Scene beginningScene, newUserScene, loggedInScene, newRecipeScene, recipeScene;
+    private Scene loggedInScene;
     private final int sceneK = 390;
     private final int sceneL = 720;
     private Stage stage;
@@ -51,7 +51,6 @@ public class RecipeCollectionUi extends Application {
     
     private List<String> addedIngredients;
         
-    
     @Override
     public void init() throws Exception {
         String userFile = "user.txt";
@@ -76,17 +75,34 @@ public class RecipeCollectionUi extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+    /**
+    * Builds beginning scene
+    *
+    * @see ui.RecipeCollectionUi#loginSigninBox(java.lang.String, java.lang.String, int) 
+    * @see ui.RecipeCollectionUi#middleButton(java.lang.String, java.lang.String, int) 
+    * 
+    * @return beginning Scene
+    */
     public Scene beginningScene() {
         BorderPane border = new BorderPane();
         
         border.setLeft(loginSigninBox("Sign in", "Sign in", 0));
         border.setRight(middleButton("Create An Account", "Join Today!", 30));
         
-        this.beginningScene= new Scene(border, sceneL, sceneK);
-        return beginningScene;
+        return new Scene(border, sceneL, sceneK);
     }
-    
+    /**
+    * Builds the scene that user sees when logged in
+    *
+    * 
+    * @throws java.lang.Exception
+    * @see ui.RecipeCollectionUi#list(java.util.List, int) 
+    * @see ui.RecipeCollectionUi#middleButton(java.lang.String, java.lang.String, int) 
+    * @see ui.RecipeCollectionUi#userMenu() 
+    * @see domain.Service#userRecipeNames() 
+    * 
+    * @return loggedIn Scene
+    */
     public Scene loggedInScene() throws Exception {
         BorderPane borderList = new BorderPane();
         ArrayList<String> empty = new ArrayList<>();
@@ -122,14 +138,12 @@ public class RecipeCollectionUi extends Application {
         border.setTop(userMenu());
         
         search.setOnAction(a -> {
-            String name = searchBy.getText();
-            //name = name.trim();
-            //name = name.toLowerCase();
+            String name = searchBy.getText().trim().toLowerCase();
             try {
                 if (name.isEmpty()) {
                     borderList.setCenter(list(empty, 0));
                 } else {
-                    ArrayList<String> names = this.service.userRecipeNames().stream().filter(r -> r.contains(name)).collect(Collectors.toCollection(ArrayList::new));
+                    ArrayList<String> names = this.service.userRecipeNames().stream().filter(r -> r.toLowerCase().contains(name)).collect(Collectors.toCollection(ArrayList::new));
                     borderList.setCenter(list(names, 1));
                 }
             } catch (Exception ex) {
@@ -140,7 +154,14 @@ public class RecipeCollectionUi extends Application {
         this.loggedInScene = new Scene(border, sceneL, sceneK);
         return loggedInScene;
     }
-    
+    /**
+    * Builds scene for creating a new account
+    *
+    * @see ui.RecipeCollectionUi#loginSigninBox(java.lang.String, java.lang.String, int) 
+    * @see ui.RecipeCollectionUi#beginningScene() 
+    * 
+    * @return newUser Scene
+    */
     public Scene newUserScene() {
         Button back = new Button("Back");
         
@@ -154,10 +175,22 @@ public class RecipeCollectionUi extends Application {
             this.stage.setScene(beginningScene());
         });
         
-        this.newUserScene = new Scene(border, sceneL, sceneK);
-        return newUserScene;
+        return new Scene(border, sceneL, sceneK);
     }
-    
+    /**
+    * Builds scene for viewing a recipe
+    *
+    * @param recipeName name of the recipe user wants to view
+    * 
+    * @throws java.lang.Exception
+    * @see ui.RecipeCollectionUi#instructions(java.lang.String) 
+    * @see ui.RecipeCollectionUi#ingredients(java.lang.String) 
+    * @see ui.RecipeCollectionUi#newRecipeScene(java.lang.String) 
+    * @see ui.RecipeCollectionUi#loggedInScene
+    * @see domain.Service#deleteRecipe(java.lang.String) 
+    * 
+    * @return beginning Scene
+    */
     public Scene recipeScene(String recipeName) throws Exception {
         
         BorderPane borderDown = new BorderPane();
@@ -192,7 +225,11 @@ public class RecipeCollectionUi extends Application {
         });
         
         backButton.setOnAction(e -> {
-            this.stage.setScene(this.loggedInScene);
+            try {
+                this.stage.setScene(loggedInScene());
+            } catch (Exception ex) {
+                Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         
         deleteButton.setOnAction(e -> {
@@ -205,15 +242,26 @@ public class RecipeCollectionUi extends Application {
             
         });
         
-        this.newRecipeScene = new Scene(border, sceneL, sceneK);
-        return newRecipeScene;
+        return new Scene(border, sceneL, sceneK);
     }
-    
+    /**
+    * Builds scene for creating a new recipe
+    *
+    * @param nameOrNull null if we are creating a new recipe or recipe's name if we are editing a recipe
+    * @throws java.lang.Exception
+    * @see domain.Service#getRecipeIngredienstByRecipeName(java.lang.String) 
+    * @see ui.RecipeCollectionUi#list(java.util.List, int)
+    * @see domain.Service#getRecipeInstructionsByRecipeName(java.lang.String) 
+    * @see domain.Service#update(java.lang.String, java.lang.String, java.util.List, java.lang.String) 
+    * @see domain.Service#createNewRecipe(java.lang.String, java.util.List, java.lang.String) 
+    * 
+    * @return newRecipe Scene
+    */
     public Scene newRecipeScene(String nameOrNull) throws Exception {
         this.addedIngredients = new ArrayList();
         if (nameOrNull != null) {
-            List<String> moi = service.getRecipeIngredienstByRecipeName(nameOrNull);
-            moi.stream().forEach(i -> addedIngredients.add(i));
+            List<String> nameIngredients = service.getRecipeIngredienstByRecipeName(nameOrNull);
+            nameIngredients.stream().forEach(i -> addedIngredients.add(i));
         }
         
         TextField recipeNameField = new TextField();
@@ -283,7 +331,7 @@ public class RecipeCollectionUi extends Application {
         textInstructions.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         TextArea addInstructions = new TextArea();
         addInstructions.setWrapText(true);
-        addInstructions.setPromptText("Add instructions here\r1.\r2.\r3.");
+        addInstructions.setPromptText("Add instructions here");
         addInstructions.setPrefSize(sceneL / 2 -20, sceneK - 90);
         
         if (nameOrNull != null) {
@@ -378,8 +426,7 @@ public class RecipeCollectionUi extends Application {
         borderOut.setTop(hboxTop);
         borderOut.setCenter(borderInner);
         
-        this.newRecipeScene = new Scene(borderOut, sceneL, sceneK);
-        return newRecipeScene;
+        return new Scene(borderOut, sceneL, sceneK);
     }
     
     public BorderPane middleButton(String buttonText, String headText, int nro) {
@@ -531,13 +578,41 @@ public class RecipeCollectionUi extends Application {
         });
         
         delete.setOnAction(e -> {
-            try {
+            Button back2 = new Button("Back");
+            Button delete2 = new Button("Delete");
+            HBox deleteBack = new HBox();
+            deleteBack.setSpacing(20);
+            deleteBack.setPadding(new Insets(10, 0, 0, 90));
+            deleteBack.getChildren().addAll(back2, delete2);
+            Text confirmText = new Text("Are you sure you want to delete this account?");
+            confirmText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
+            BorderPane pb = new BorderPane();
+            pb.setPadding(new Insets(20, 20, 20, 20));
+            
+            pb.setTop(confirmText);
+            pb.setCenter(deleteBack);
+            
+            
+            Scene confirmScene = new Scene(pb, 340, 100);
+            Stage confirmStage = new Stage();
+            confirmStage.setResizable(false);
+            confirmStage.setScene(confirmScene);
+            confirmStage.show();
+            
+            back2.setOnAction(e2 -> {
+                confirmStage.close();
+            });
+            
+            delete2.setOnAction(e3 -> {
+                try {
                 if (service.deleteAccount()) {
-                stage.setScene(beginningScene());
+                    confirmStage.close();
+                    stage.setScene(beginningScene());
                 }
             } catch (Exception ex) {
                 System.out.println(ex);
             }
+            });
         });
         
         return menuBar;
@@ -548,26 +623,26 @@ public class RecipeCollectionUi extends Application {
         ObservableList<String> data = FXCollections.observableArrayList();
         data.clear();
         
-        ListView<String> listView = new ListView<String>();
+        ListView<String> listView = new ListView<>();
         listView.setPrefSize(200, 250);
         
-        //jos haluaan kaikki reseptit
+        //jos halutaan kaikki reseptit
         if(recipes.isEmpty() && i == 0 ) {
             recipes = service.userRecipeNames();
         }
         data.addAll(recipes);
         
         listView.setItems(data);
-        listView.getSelectionModel().selectedItemProperty().addListener(
+        listView.getSelectionModel().selectedItemProperty().addListener (
             (ObservableValue<? extends String> ov, String old_val, 
-                String new_val) -> {
-                if (i == 0 || i == 1) {
-                    try {
-                        this.stage.setScene(recipeScene(new_val));
-                    } catch (Exception ex) {
-                        Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            String new_val) -> {
+            if (i == 0 || i == 1) {
+                try {
+                    this.stage.setScene(recipeScene(new_val));
+                } catch (Exception ex) {
+                    Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
 
         });
 

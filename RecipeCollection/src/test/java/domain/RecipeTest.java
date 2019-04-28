@@ -35,7 +35,9 @@ public class RecipeTest {
     @After
     public void tearDown() {
     }
-    
+    /**
+    * Tests that constructors are set correctly 
+    */
     @Test
     public void constructorsWork() {
         Assert.assertTrue(recipe.getUser().equals(user) && user.equals(recipe.getUser()));
@@ -44,7 +46,9 @@ public class RecipeTest {
         assertEquals("pie", noId.getName());
     }
     
-    
+    /**
+    * Tests that setIngredients and getIngredientsString works correctly
+    */
     @Test
     public void settingAndGettingIngredientsWorks() {
         String ingredients = "cheese_sugar_cake";
@@ -52,12 +56,13 @@ public class RecipeTest {
         assertEquals(ingredients, recipe.getIngredientsString());
     }
     
+    /**
+    * Tests that setInstruction and instructions works correctly
+    */
     @Test
     public void settingAndGettingInstructionsWorks() {
         String instructions = "mix_bake_enjoy";
         recipe.setInstruction(instructions);
         assertEquals(instructions, recipe.getInstruction());
     }
-    
-    
 }
