@@ -277,7 +277,7 @@ public class RecipeCollectionUi extends Application {
         text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         
         TextField addField = new TextField();
-        addField.setPromptText("Add ingredient");
+        addField.setPromptText("Add/Delete ingredient");
         addField.setPrefWidth(219);
         Button add = new Button("Add");
         Button delete = new Button("Delete");
@@ -357,7 +357,11 @@ public class RecipeCollectionUi extends Application {
         saveButton.setTooltip(tooltip);
         
         backButton.setOnMouseClicked(e -> {
-            stage.setScene(this.loggedInScene);
+            try {
+                stage.setScene(loggedInScene());
+            } catch (Exception ex) {
+                Logger.getLogger(RecipeCollectionUi.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         
         saveButton.setOnMouseClicked(e -> {
