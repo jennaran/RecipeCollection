@@ -49,7 +49,7 @@ Sovelluksessa niitä käytetään niiden rajapintojen kautta.
 ### Tiedostot
 
 Käyttäjien ja reseptien tiedot tallennetaan erillisiin tiedostoihin.  
-Käyttäjät tallennetaan tiedostoon nimeltä *user.txt* ja reseptit tiedostoon *recipe.txt*.
+Käyttäjät tallennetaan tiedostoon nimeltä **user.txt** ja reseptit tiedostoon **recipe.txt**.
 Tiedostot on määritelty RecipeCollectionUi:n metodissa _init()_.
 
 #### Käyttäjien tallennusmuoto
