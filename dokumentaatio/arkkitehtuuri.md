@@ -86,4 +86,4 @@ Uudenkäyttäjän luomisnäkymän _Sign up_ -nappi laittaa liikkeelle seuraavan 
 
 # Ohjelman rakenteeseen jääneet heikkoudet
 
-
+RecipeServiceUi-luokassa oleva koodi vaatisi siistimistä. Metodit ovat pistkiä ja sisältävät hieman kikkailua. 
