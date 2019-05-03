@@ -28,7 +28,6 @@ public class DerbyUserDAO implements UserDAO {
             Scanner reader = new Scanner(new File(file));
             while (reader.hasNextLine()) {
                 String[] parts = reader.nextLine().split(";");
-                //name, username, password
                 User user = new User(parts[0], parts[1]);
                 users.add(user);
             }
@@ -90,11 +89,8 @@ public class DerbyUserDAO implements UserDAO {
     }
     /**
     * Writes changes to the file
-    * 
-    * @throws java.lang.Exception 
-    * 
     */
-    public void saveToFile() throws Exception {
+    public void saveToFile() {
         try (FileWriter writer = new FileWriter(new File(userFile))) {
             for (User u : users) {
                 writer.write(u.getUsername() + ";" + u.getPassword() + "\n");

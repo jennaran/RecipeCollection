@@ -116,10 +116,8 @@ public class DerbyRecipeDAO implements RecipeDAO {
     /**
     * Writes changes to the file
     * 
-    * @throws java.lang.Exception 
-    * 
     */
-    public void saveToFile() throws Exception {
+    public void saveToFile() {
         try (FileWriter writer = new FileWriter(new File(recipeFile))) {
             for (Recipe r : recipes) {
                 writer.write(r.getName() + ";" + r.getIngredientsString() + ";" + r.getInstruction() + ";" + r.getUser().getUsername() + "\n");

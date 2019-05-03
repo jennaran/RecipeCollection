@@ -86,10 +86,70 @@ public class ServiceUserTest {
     * @see domain.Service#getLoggenInUser() 
     */
     @Test
-    public void cantCreateUserWithAlreadyUsedUsername() throws Exception {
+    public void canNotCreateUserWithAlreadyUsedUsername() throws Exception {
         assertFalse(this.service.createNewUser("name1", "tikka"));
         
         assertFalse(this.service.logIn("name1", "tikka"));
+        assertEquals(null, this.service.getLoggenInUser());
+    }
+    /**
+    * Tests creating a new user with no username doesn't work
+    *
+    * @throws java.lang.Exception
+    * 
+    * @see domain.Service#createNewUser(java.lang.String, java.lang.String)  
+    * @see domain.Service#logIn(java.lang.String, java.lang.String) 
+    * @see domain.Service#getLoggenInUser() 
+    */
+    @Test
+    public void canNotCreateUserWithNoUsername() throws Exception {
+        assertFalse(this.service.createNewUser("", "test"));
+        assertFalse(this.service.logIn("", "test"));
+        assertEquals(null, this.service.getLoggenInUser());
+    }
+    /**
+    * Tests creating a new user with no password doesn't work
+    *
+    * @throws java.lang.Exception
+    * 
+    * @see domain.Service#createNewUser(java.lang.String, java.lang.String)  
+    * @see domain.Service#logIn(java.lang.String, java.lang.String) 
+    * @see domain.Service#getLoggenInUser() 
+    */
+    @Test
+    public void canNotCreateUserWithNoPassword() throws Exception {
+        assertFalse(this.service.createNewUser("test", ""));
+        assertFalse(this.service.logIn("test", ""));
+        assertEquals(null, this.service.getLoggenInUser());
+    }
+    /**
+    * Tests creating a new user with illegal mark ";" in username doesn't work
+    *
+    * @throws java.lang.Exception
+    * 
+    * @see domain.Service#createNewUser(java.lang.String, java.lang.String)  
+    * @see domain.Service#logIn(java.lang.String, java.lang.String) 
+    * @see domain.Service#getLoggenInUser() 
+    */
+    @Test
+    public void canNotCreateUserWithIllegalMarksInUsername() throws Exception {
+        assertFalse(this.service.createNewUser("test;", "test"));
+        assertFalse(this.service.logIn("test;", "test"));
+        assertEquals(null, this.service.getLoggenInUser());
+    }
+    /**
+    * Tests creating a new user with illegal mark ";" in password doesn't work
+    *
+    * @throws java.lang.Exception
+    * 
+    * @see domain.Service#createNewUser(java.lang.String, java.lang.String)  
+    * @see domain.Service#logIn(java.lang.String, java.lang.String) 
+    * @see domain.Service#getLoggenInUser() 
+    */
+    @Test
+    public void canNotCreateUserWithIllegalMarksInPassword() throws Exception {
+        assertFalse(this.service.createNewUser("test", "te;st"));
+        assertFalse(this.service.logIn("test", "te;st"));
         assertEquals(null, this.service.getLoggenInUser());
     }
     /**

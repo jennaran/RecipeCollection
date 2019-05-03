@@ -45,7 +45,6 @@ public class RecipeTest {
         assertEquals("cheesecake", recipe.getName());
         assertEquals("pie", noId.getName());
     }
-    
     /**
     * Tests that setIngredients and getIngredientsString works correctly
     */
@@ -55,7 +54,6 @@ public class RecipeTest {
         recipe.setIngredients(ingredients);
         assertEquals(ingredients, recipe.getIngredientsString());
     }
-    
     /**
     * Tests that setInstruction and instructions works correctly
     */
