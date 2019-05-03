@@ -28,7 +28,6 @@ syöttämällä virheellistä tietoa ja varmistamalla ettei ongelmia synny.
 
 ## Testikattavuus
 
-<img src = "https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_uusiKayttajaVirhe2.png">
 
 Testaamatta on jäänyt kaikki poikkeukset.
 
