@@ -43,6 +43,7 @@ public class DerbyRecipeDAO implements RecipeDAO {
             }
             
         } catch (FileNotFoundException | NumberFormatException e) {
+            System.out.println("An exception occurred in reading from the recipe file: " + e.getMessage());
             FileWriter writer = new FileWriter(new File(this.recipeFile));
             writer.close();
         }
@@ -124,7 +125,8 @@ public class DerbyRecipeDAO implements RecipeDAO {
                 writer.write(r.getName() + ";" + r.getIngredientsString() + ";" + r.getInstruction() + ";" + r.getUser().getUsername() + "\n");
             }
         } catch (Exception e) {
-            System.out.println("voi ei :(");
+            System.out.println("An exception occurred in saving recipes into a file: " + e.getMessage());
+            
         }
     }
 

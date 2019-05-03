@@ -48,6 +48,7 @@ public class Service {
         try {
             recipeDAO.create(recipe);
         } catch (Exception e) {
+            System.out.println("An exception occurred in creating a new recipe: " + e.getMessage());
             return false;
         }
         return true;
@@ -59,7 +60,6 @@ public class Service {
     * @param newName recipe's new name
     * @param   listIngredients   list of ingredients given by the user
     * @param   instructionWrong   instructions given by the user
-    * @throws java.lang.Exception
     * 
     * @see domain.Service#userRecipeNames() 
     * @see dao.RecipeDAO#delete(java.lang.String, domain.User) 
@@ -67,10 +67,15 @@ public class Service {
     * 
     * @return true - if updating a recipe works
     */
-    public boolean update(String oldName, String newName, List<String> listIngredients, String instructionWrong) throws Exception {
+    public boolean update(String oldName, String newName, List<String> listIngredients, String instructionWrong) {
         String recipeWithName = userRecipeNames().stream().filter(n -> n.equals(newName)).findFirst().orElse(null);
         if (recipeWithName == null || recipeWithName.equals(oldName)) {
-            this.recipeDAO.delete(oldName, this.loggenInUser);
+            try {
+                this.recipeDAO.delete(oldName, this.loggenInUser);
+            } catch (Exception e) {
+                System.out.println("An exception occurred in updating a recipe: " + e.getMessage());
+                return false;
+            }
             
             return createNewRecipe(newName, listIngredients, instructionWrong);
             
@@ -159,12 +164,15 @@ public class Service {
     * This method is for deleting a recipe
     *
     * @param   name   recipe's name given by the user
-    * @throws java.lang.Exception
     * 
     * @see dao.RecipeDAO#delete(java.lang.String, domain.User) 
     */
-    public void deleteRecipe(String name) throws Exception {
-        this.recipeDAO.delete(name, loggenInUser);
+    public void deleteRecipe(String name) {
+        try {
+            this.recipeDAO.delete(name, loggenInUser);
+        } catch (Exception e) {
+            System.out.println("An exception occurred in deleting a recipe: " + e.getMessage());
+        }
     }
     /**
     * This method is for creating a new user with a unique username
@@ -178,17 +186,18 @@ public class Service {
     * @return true - if creating a user works
     */
     public boolean createNewUser(String username, String password) {
-        if (userDao.searchByUsername(username) != null) {
-            return false;
+        if (!username.isEmpty() && !password.isEmpty() && !username.contains(";") && !password.contains(";") && userDao.searchByUsername(username) == null) {
+            User user = new User(username, password);
+            try {
+                userDao.create(user);
+            } catch (Exception e) {
+                System.out.println("An exception occurred in creating a new user: " + e.getMessage());
+                return false;
+            }
+            return true;
         }
-        User user = new User(username, password);
-        try {
-            userDao.create(user);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    } 
+        return false;
+    }
     /**
     * This method is for login.
     * It sets a value for the loggedInUser
@@ -238,7 +247,8 @@ public class Service {
         try {
             userDao.delete(this.loggenInUser);
             this.recipeDAO.delete(loggenInUser);
-        } catch (Exception ex) {
+        } catch (Exception e) {
+            System.out.println("An exception occurred in deletin an account: " + e.getMessage());
             return false;
         }
         logOut();
@@ -257,5 +267,4 @@ public class Service {
         List<String> recipeNames = recipes.stream().map(r -> r.getName()).collect(Collectors.toList());
         return recipeNames;
     }
-
 }

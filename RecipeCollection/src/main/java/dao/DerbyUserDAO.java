@@ -33,6 +33,7 @@ public class DerbyUserDAO implements UserDAO {
                 users.add(user);
             }
         } catch (FileNotFoundException e) {
+            System.out.println("An exception occurred in reading from the user file: " + e.getMessage());
             FileWriter writer = new FileWriter(new File(file));
             writer.close();
         }
@@ -99,7 +100,7 @@ public class DerbyUserDAO implements UserDAO {
                 writer.write(u.getUsername() + ";" + u.getPassword() + "\n");
             }
         } catch (Exception e) {
-            
+            System.out.println("An exception occurred in saving user into a file: " + e.getMessage());
         }
     }
     

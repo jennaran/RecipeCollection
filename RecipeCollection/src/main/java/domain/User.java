@@ -6,8 +6,8 @@ import java.util.Objects;
  * This is a class for users
  */
 public class User {
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
     /**
      * Sets constructors
      * 
