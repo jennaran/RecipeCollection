@@ -32,7 +32,7 @@ Näkymä vaihtuu aloitusnäkymäksi, jos käyttäjä tunnus luodaan onnistuneest
 
 Jos käyttäjätunnus on jo käytössä, ilmestyy ruutuun virheviesti.
 
-<img src="https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_uusiKayttaja_virheviesti.png">
+<img src = "https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_uusiKayttajaVirhe2.png">
 
 Ylhäällä olevasta _Back_ -nappulasta pääsee takaisin aloitusnäkymään.
 
