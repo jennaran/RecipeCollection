@@ -4,7 +4,9 @@ package domain;
 import dao.UserDAO;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Simulates DerbyUserDAO for testing
+ */
 public class FakeUserDAO implements UserDAO {
     List<User> users = new ArrayList<>();
 

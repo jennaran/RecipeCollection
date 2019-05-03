@@ -7,7 +7,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
+/**
+ * Tests class User
+ */
 public class UserTest {
     User user;
     

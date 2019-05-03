@@ -64,10 +64,10 @@ public class DerbyRecipeDAO implements RecipeDAO {
         saveToFile();
     }
     /**
-    * Deletes a recipe
+    * Deletes a recipe and saves changes
     * 
-     * @param name name of the recipe being deleted
-     * @param user name of the user who owns the recipe
+    * @param name name of the recipe being deleted
+    * @param user name of the user who owns the recipe
     * @throws java.lang.Exception 
     * 
     * @see dao.DerbyRecipeDAO#listUsersAll(domain.User) 
@@ -82,7 +82,7 @@ public class DerbyRecipeDAO implements RecipeDAO {
         saveToFile();
     }
     /**
-    * Deletes given user's recipes
+    * Deletes given user's recipes and saves changes
     * 
     * @param user user whose recipes are going to be deleted
     * @throws java.lang.Exception 

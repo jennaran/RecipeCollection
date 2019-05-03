@@ -10,7 +10,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
+/**
+ * Tests class Service - all methods that are related to UserDAO
+ */
 public class ServiceRecipeTest {
     FakeUserDAO userDAO;
     FakeRecipeDAO recipeDAO;

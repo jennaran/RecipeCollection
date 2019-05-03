@@ -39,8 +39,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-
+/**
+ * Graphic user interface
+ */
 public class RecipeCollectionUi extends Application {
     private Scene loggedInScene;
     private final int sceneK = 390;
@@ -406,7 +407,15 @@ public class RecipeCollectionUi extends Application {
         
         return new Scene(borderOut, sceneL, sceneK);
     }
-    
+    /**
+    * Creates a big button and text above it that are placed in middle of a BorderPane
+    * 
+    * @param buttonText text that is set to the button
+    * @param headText text that is above the button
+    * @param nro when nro is 30, button is used for creating a new account - when nro is 0, nutton is used for creating a new recipe
+    * 
+    * @return BorderPane with a big button
+    */
     public BorderPane middleButton(String buttonText, String headText, int nro) {
         //30 for new account 
         //0 for new recipe
@@ -436,7 +445,15 @@ public class RecipeCollectionUi extends Application {
         
         return border;
     }
-    
+    /**
+    * Creates vbox including recipe's instructions
+    * 
+    * @param name recipe's name
+    * 
+    * @see domain.Service#getRecipeInstructionsByRecipeName(java.lang.String) 
+    * 
+    * @return instructions
+    */
     public VBox instructions(String name) {
         Text text = new Text("Instructions");
         text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -452,12 +469,21 @@ public class RecipeCollectionUi extends Application {
         vbox.setSpacing(20);
         return vbox;
     }
-    
+    /**
+    * Creates vbox including recipe's ingredients
+    * 
+    * @param name recipe's name
+    * 
+    * @see domain.Service#getRecipeIngredienstByRecipeName(java.lang.String) 
+    * @see ui.RecipeCollectionUi#list(java.util.List, int) 
+    * 
+    * @return ingredients
+    */
     public VBox ingredients(String name) {
         Text text = new Text("Ingredients");
         text.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         List<String> ingredients = this.service.getRecipeIngredienstByRecipeName(name);
-        StackPane list = list(ingredients, 3);
+        StackPane list = list(ingredients, 2);
         VBox vbox = new VBox();
         vbox.getChildren().add(text);
         vbox.getChildren().add(list);
@@ -466,11 +492,19 @@ public class RecipeCollectionUi extends Application {
         vbox.setSpacing(20);
         return vbox;
     }
-    
+    /**
+    * Creates GridPane used for login and sign in 
+    * 
+    * @param text text next to first TextField
+    * @param button text next to second TextField
+    * @param i 0 for login and 1 for creating a new user
+    * 
+    * @see ui.RecipeCollectionUi#gridPane() 
+    * 
+    * @return GridPane
+    */
     public GridPane loginSigninBox(String text, String button, int i) {
-        //0 for signing in and 1 for signing up (NEW)
         GridPane grid = gridPane();
-        //maybe set prefsize to textFields????????????
         Text upText = new Text(text);
         upText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(upText, 0, 1);
@@ -521,7 +555,10 @@ public class RecipeCollectionUi extends Application {
         
         return grid;
     }
-    
+    /**
+    * Creates a GridPane 
+    * @return GridPane
+    */
     public GridPane gridPane() {
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -532,7 +569,11 @@ public class RecipeCollectionUi extends Application {
         
         return grid;
     }
-    
+    /**
+    * Creates an usermenu
+    * 
+    * @return MenuBar
+    */
     public MenuBar userMenu() {
         String username = service.getLoggenInUser().getUsername();
         Menu userMenu = new Menu(username);
@@ -590,20 +631,24 @@ public class RecipeCollectionUi extends Application {
         
         return menuBar;
     }
-    
-    public StackPane list(List<String> recipes, int i) {
-        //0 for recipe name list
+    /**
+    * Creates a list 
+    * 
+    * @param recipesOrIngredients a list of recipe names or ingredients
+    * @param i 0 for listing all recipes, 1 for listing specific recipes, 2 for listing ingredients
+    * @return a list
+    */
+    public StackPane list(List<String> recipesOrIngredients, int i) {
         ObservableList<String> data = FXCollections.observableArrayList();
         data.clear();
         
         ListView<String> listView = new ListView<>();
         listView.setPrefSize(200, 250);
         
-        //jos halutaan kaikki reseptit
-        if(recipes.isEmpty() && i == 0 ) {
-            recipes = service.userRecipeNames();
+        if(recipesOrIngredients.isEmpty() && i == 0 ) {
+            recipesOrIngredients = service.userRecipeNames();
         }
-        data.addAll(recipes);
+        data.addAll(recipesOrIngredients);
         
         listView.setItems(data);
         listView.getSelectionModel().selectedItemProperty().addListener (
@@ -623,9 +668,6 @@ public class RecipeCollectionUi extends Application {
         root.getChildren().add(listView);
         root.setPrefWidth(sceneL / 2);
 
-
         return root;
     }
-    
-   
 }
