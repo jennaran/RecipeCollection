@@ -23,4 +23,5 @@
 | 27.4. | 2 | Testejen kirjoittelua |
 | 28.4. | 3 | Loput testit ja dokumentaation ja javadocin päivittämistä. Nyt sovellus varmistaa käyttäjän poistamisen |
 | 3.5. | 5 | Javadocin lisääminen loppuihin luokkiin, poikkeusten läpikäynti ja järkevimpien virheviestien luonti, sekä testikattavuus dokumentin täydentämistä. Lisäksi päivitin Servicen yhden metodin. |
-| *Yhteensä* | 77.5 |  |
+| 4.5. | 2 | Dokumenttien päivitys ja koodin viimeistely |
+| *Yhteensä* | 79.5 |  |
