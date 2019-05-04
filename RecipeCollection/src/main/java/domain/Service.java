@@ -175,7 +175,7 @@ public class Service {
         }
     }
     /**
-    * This method is for creating a new user with a unique username
+    * This method is for creating a new user with an unique username
     *
     * @param   username   username of the new user
     * @param   password   password of the new user
