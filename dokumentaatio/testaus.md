@@ -28,7 +28,11 @@ syöttämällä virheellistä tietoa ja varmistamalla ettei ongelmia synny.
 
 ## Testikattavuus
 
+Käyttöliittymä on jätetty testaamatta. Testattujen luokkien rivikattavuus on 87% ja 
+haarautumakattavuus 100%. 
 
-Testaamatta on jäänyt kaikki poikkeukset.
+<img src = "https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/Kuvat/RC_testikattavuus.png">
 
-##
+Testaamatta on jäänyt lähes kaikki poikkeukset. Koska try-catch toimintoja esiintyy koodissa
+useita kertoja ja jokainen niistä vie tilaa 2-3 riviä, on rivikattavuus jäänyt hieman
+alhaiseksi tästä syystä.
