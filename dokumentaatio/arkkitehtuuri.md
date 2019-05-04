@@ -88,6 +88,10 @@ Uudenkäyttäjän luomisnäkymän _Sign up_ -nappi laittaa liikkeelle seuraavan 
 
 Nappulan painaminen kutsuu Service luokan _createNewUser_-metodia antaen sille parametreina käyttäjän syöttämät arvot käyttäjänimi ja salasana. Tutkitaan, että kumpikaan arvo ei ole tyhjä tai sisällä kiellettyä mertkkiä ";". Käyttäen DerbyUserDAO:n metodia _searchByUsername_ antaen sille parametrina käyttäjänimi, etsitään löytyykö käyttäjien joukosta kyseisen nimistä käyttäjää. Jos kysely palauttaa **null**, voidaan luoda uusi User-olio käyttäjän antamilla arvoilla. Tallennetaan juuri luotu käyttäjä tiedostoon kutsumalla DerbyUserDAO:n metodia _create_ antamalla sille parametriksi uusi käyttäjä. Jos tallennus onnistuu, palutetaan **true**. Muissa tapauksissa palautetaan **false**.
 
+### Muut toiminallisuudet
+
+Muut toiminnallisuudet toimivat samalla tavalla. Käyttäjä laittaa liikkeelle tapahtumaketjun jotain nappulaa painamalla, sen seurauksena kutsutaan sopivaa Service-luokan metodia, joka puolestaan kutsuu RecipeDAO:n tai UserDAO:n metodeja. Kontrollin palautuessa käyttöliittymälle, vaihdetaan tarvittaessa näkymää tai päivitetään nykyinen näkymä.
+
 # Ohjelman rakenteeseen jääneet heikkoudet
 
 [RecipeServiceUi](https://github.com/jennaran/ot-harjoitustyo/blob/master/RecipeCollection/src/main/java/ui/RecipeCollectionUi.java)-luokassa oleva koodi vaatisi siistimistä. Metodit ovat pistkiä ja sisältävät hieman kikkailua. 
