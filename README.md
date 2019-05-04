@@ -12,6 +12,8 @@ Sovellusta voi käyttää usea käyttäjä, mutta sisältö on kaikille henkilö
 
 [Arkkitehtuuri](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
+[Testaus](https://github.com/jennaran/RecipeCollection/blob/master/dokumentaatio/testaus.md)
+
 [Tuntikirjanpito](https://github.com/jennaran/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 ## Releaset
