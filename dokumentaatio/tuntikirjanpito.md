@@ -20,6 +20,7 @@
 | 24.4. | 8 | Servicen loput testit, javaDoc aloitettu ja käyttöohjeiden teko |
 | 25.4. | 4 | Lisäsin reseptien muokkaus ominaisuuden ja poistin indeksit resepteistä |
 | 26.4. | 0.5 | Reseptien poisto-ominaisuus lisätty |
-| 27.4. | 2 | Testejen kirjoittekua |
-| 28.4. | 3 | Loput testit ja dokumentaation päivittämistä |
-| *Yhteensä* | 68.5 |  |
+| 27.4. | 2 | Testejen kirjoittelua |
+| 28.4. | 3 | Loput testit ja dokumentaation ja javadocin päivittämistä. Nyt sovellus varmistaa käyttäjän poistamisen |
+| 3.5. | 5 | Javadocin lisääminen loppuihin luokkiin, poikkeusten läpikäynti ja järkevimpien virheviestien luonti, sekä testikattavuus dokumentin täydentämistä. Lisäksi päivitin Servicen yhden metodin. |
+| *Yhteensä* | 77.5 |  |
